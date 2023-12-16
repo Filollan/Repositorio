@@ -1,0 +1,175 @@
+---
+import { Image } from 'astro:assets';
+import ticTacToeImage from './images/tic-tac-toe.png';
+import spacexTravelersImage from './images/space-x-travelers.png';
+import mathematiciansImage from './images/mathematicians-rn.png';
+import wordleImage from './images/wordle.png';
+
+import { Icon } from 'astro-icon';
+const PROJECTS = [
+ 
+  {
+    name: 'Tic Tac Toe',
+    image: { src: ticTacToeImage, alt: 'Tic tac toe website' },
+    description:
+      'Single page application where you can play Tic Tac Toe games versus a computer or another player.',
+    technologies: ['React', 'TypeScript', 'TailwindCSS'],
+    liveLink: 'https://tic-tac-toe-orlando.vercel.app/',
+    sourceLink: 'https://github.com/orlandodiazc/tic-tac-toe',
+  },
+
+  {
+    name: 'Wordle',
+    image: { src: wordleImage, alt: 'Wordle website' },
+    description:
+      'Wordle is a popular online video game, you have 6 chances to guess the correct 5 letter word or you will lose, give it a go!',
+    technologies: ['React', 'TypeScript', 'TailwindCSS'],
+    liveLink: 'https://wordle-orlando.vercel.app/',
+    sourceLink: 'https://github.com/orlandodiazc/wordle',
+  },
+];
+---
+
+<div class="section__divider">
+  <section class="container section" id="projects">
+    <h2 class="section__title">Proyectos</h2>
+    <p class="section__description">
+      ...
+    </p>
+    <div class="project-list">
+      {
+        PROJECTS.map((project) => (
+          <div class="project__wrapper" data-inviewport>
+            <article class="project">
+              <div class="project__image">
+                <Image
+                  src={project.image.src}
+                  width={800}
+                  height={538}
+                  alt={project.image.alt}
+                />
+              </div>
+              <div>
+                <h3 class="medium-heading">{project.name}</h3>
+                <p class="small-p">{project.description}</p>
+                <ul class="project__technologies list">
+                  {project.technologies.map((technology) => (
+                    <li>{technology}</li>
+                  ))}
+                </ul>
+                <div class="project__links">
+                  <a
+                    class="button button--primary"
+                    target="_blank"
+                    href={project.liveLink}
+                  >
+                    <span class="icon-wrapper--small">
+                      <Icon name="lucide:link" class="icon-xs" />
+                    </span>
+                    <span>See live</span>
+                  </a>
+                  <a
+                    class="button button--secondary button--outline"
+                    target="_blank"
+                    href={project.sourceLink}
+                  >
+                    <span class="icon-wrapper--small">
+                      <Icon name="lucide:github" class="icon-xs" />
+                    </span>
+                    <span>See code</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</div>
+
+<style lang="scss">
+  @use 'styles/screen';
+
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .project {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+
+    > div {
+      flex: 1;
+    }
+
+    &__wrapper {
+      background-color: var(--background);
+      border: 1px solid var(--accents-2);
+      border-radius: 1rem;
+      box-shadow: var(--project-shadow);
+      max-width: 700px;
+      margin: 0 auto;
+
+    }
+
+    &__image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 16 / 10;
+      border-radius: 0.5rem;
+
+      img {
+        width: auto;
+        height: auto;
+        border-radius: inherit;
+      }
+    }
+
+    &__technologies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+
+      li {
+        padding: 0.25rem 0.75rem;
+        font-size: 15px;
+        color: var(--accents-8);
+        border: 1px solid var(--accents-2);
+        border-radius: 0.25rem;
+        box-shadow: var(--badge-shadow);
+      }
+    }
+
+    &__links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    @media (min-width: screen.$md) {
+      &__title {
+        font-size: 1.75rem;
+      }
+
+      &__description {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (min-width: screen.$lg) {
+      flex-direction: row;
+      padding: 1.25rem;
+    }
+  }
+</style>

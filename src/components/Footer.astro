@@ -1,0 +1,65 @@
+---
+import Icon from "astro-icon";
+---
+
+<div class="footer__wrapper">
+  <footer>
+    <p class="footer__description">Construido usando astro y Sass, 2023</p>
+    <ul class="footer__icons list">
+      <li>
+        <a
+          class="button button--secondary button--icon"
+          href="https://www.linkedin.com/in/miguel-ángel-llantén-62005a245/"
+          target="_blank"
+          aria-label="Linked-in"
+        >
+          <Icon name="lucide:linkedin" class="icon-sm" />
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://github.com/Filollan"
+          class="button button--secondary button--icon"
+          target="_blank"
+          aria-label="Github"
+        >
+          <Icon name="lucide:github" class="icon-sm" />
+        </a>
+      </li>
+    </ul>
+  </footer>
+</div>
+
+<style lang="scss">
+  @use "styles/screen";
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+    padding-inline: 1rem;
+
+    @media (min-width: screen.$md) {
+      padding-inline: 3rem;
+    }
+  }
+
+  .footer {
+    &__wrapper {
+      box-shadow: var(--divider-shadow);
+    }
+
+    &__description {
+      font-size: 14px;
+      color: var(--foreground);
+    }
+
+    &__icons {
+      display: flex;
+      flex-direction: row;
+      gap: 0.25rem;
+      color: var(--accents-7);
+    }
+  }
+</style>

@@ -1,0 +1,46 @@
+---
+import { Icon } from "astro-icon";
+import ContactForm from "./ContactForm.astro";
+---
+
+<div class="section__divider">
+  <section class="container section" id="contact">
+    <h2 class="section__title">Contactame</h2>
+    <div data-inviewport>
+      <p class="section__description">
+        Si te interesa ponerte en contacto conmigo, no dudes en escribirme!
+      </p>
+      <ContactForm />
+      <div class="contact__email">
+        <a
+          href="mailto:orlandodiazconde@gmail.com"
+          aria-label="Orlando's email"
+          class="contact__email-link"
+        >
+          <span class="icon-wrapper--large"
+            ><Icon name="lucide:mail" class="icon-lg" /></span
+          >
+        </a>
+        <span>llanten3215@gmail.com</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style lang="scss">
+  .contact {
+    &__email {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    &__email-link {
+      display: flex;
+      font-size: 15px;
+      color: var(--foreground);
+    }
+  }
+</style>

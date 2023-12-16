@@ -1,0 +1,33 @@
+diff --git a/lib/utils.ts b/lib/utils.ts
+index 3fa8f90a738ab3c0e2790c522b09f19110fb37a3..f34305421bdbbb30195f47f87ce855247e79c1ef 100644
+--- a/lib/utils.ts
++++ b/lib/utils.ts
+@@ -142,11 +142,11 @@ export default async function load(
+     const [pack, ..._name] = name.split(":");
+     name = _name.join(":");
+     // Note: omit ending to use default resolution
+-    filepath = `/src/icons/${pack}`;
++    filepath = `/src/assets/icons/${pack}`;
+     let get;
+     try {
+       const files = import.meta.globEager(
+-        "/src/icons/**/*.{js,ts,cjs,mjc,cts,mts}"
++        "/src/assets/icons/**/*.{js,ts,cjs,mjc,cts,mts}"
+       );
+       const keys = Object.fromEntries(
+         Object.keys(files).map((key) => [key.replace(/\.[cm]?[jt]s$/, ""), key])
+@@ -185,10 +185,12 @@ ${contents}`
+     }
+     svg = contents;
+   } else {
+-    filepath = `/src/icons/${name}.svg`;
++    filepath = `/src/assets/icons/${name}.svg`;
+ 
+     try {
+-      const files = import.meta.globEager("/src/icons/**/*.svg", { as: "raw" });
++      const files = import.meta.globEager("/src/assets/icons/**/*.svg", {
++        as: "raw",
++      });
+ 
+       if (!(filepath in files)) {
+         throw new Error(`Could not find the file "${filepath}"`);

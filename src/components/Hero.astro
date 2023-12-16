@@ -1,0 +1,156 @@
+---
+import { Icon } from "astro-icon";
+---
+
+<div class="hero__wrapper">
+  <div class="hero__gradient" aria-hidden></div>
+  <section class="hero container" data-inviewport>
+    <h1 class="hero__title">
+        Miguel Llanten
+    </h1>
+    <h2 class="hero__subtitle">Desarrollador Web</h2>
+    <p class="section__description">
+      ¡Hola! Soy un apasionado de la tecnología y la ciencia. 
+      Actualmente, soy estudiante de Ingeniería Informática, y además,
+       tengo conocimientos en administración de redes sociales y finanzas, disfruto explorar la filosofía 
+       a través de la lectura y mantenerme activo con actividades como la natación y el levantamiento de pesas.
+        ¡Conóceme más a fondo explorando mi página!.
+    </p>
+    <div class="hero__buttons">
+      <div>
+        <a
+          href="https://www.linkedin.com/in/miguel-ángel-llantén-62005a245/"
+          target="_blank"
+          class="button button--primary"
+        >
+          <span class="icon-wrapper--small"
+            ><Icon name="lucide:linkedin" /></span
+          >
+          <span>Linkedln</span>
+        </a>
+      </div>
+      <div>
+        <a
+          href="https://github.com/Filollan"
+          target="_blank"
+          class="button button--transparent button--outline"
+          aria-label="Github"
+        >
+          <span class="icon-wrapper--small"><Icon name="lucide:github" /></span>
+          <span class="hero__button-title">Github</span>
+        </a>
+      </div>
+      <div>
+        <a
+          href=" "
+          target="_blank"
+          class="button button--transparent button--outline"
+          aria-label="Orlando's resume"
+        >
+          <span class="icon-wrapper--small"
+            ><Icon name="lucide:file-text" /></span
+          >
+          <span class="hero__button-title">CV</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style lang="scss">
+  @use "styles/screen";
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100dvh - 4rem);
+    padding-block: 3rem;
+    text-align: center;
+
+    &__wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+    .section__description {
+    font-size: 1.3rem;  // Ajusta el tamaño de la fuente según tus preferencias
+    color: var(--accents-7);  // Puedes ajustar el color según tus preferencias
+    line-height: 1.5;  // Puedes ajustar la altura de línea según tus preferencias
+    max-width: 800px;  // Puedes ajustar el ancho máximo según tus preferencias
+    margin-inline: auto;  }
+
+    &__gradient {
+      position: absolute;
+      top: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--hero-gradient);
+      transform: scaleX(1.5) scaleY(2.5);
+
+      @media (min-width: screen.$sm) {
+        transform: scaleX(2.5) scaleY(1.75);
+      }
+
+      @media (min-width: screen.$md) {
+        transform: scaleX(2) scaleY(1.75);
+      }
+
+      @media (min-width: screen.$lg) {
+        transform: scaleX(2.2) scaleY(1.3);
+      }
+    }
+
+    &__title {
+      margin-bottom: 1.25rem;
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--accents-8);
+      letter-spacing: -0.04em;
+    }
+
+    &__subtitle {
+      margin-bottom: 1.75rem;
+      font-size: 1.75rem;
+      font-weight: 600;
+      line-height: 1;
+      color: var(--primary);
+      letter-spacing: -0.04em;
+    }
+
+    &__buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    &__button-title {
+      display: none;
+    }
+
+    @media (min-width: screen.$md) {
+      &__button-title {
+        display: inline-block;
+      }
+
+      &__title {
+        font-size: 5rem;
+      }
+
+      &__subtitle {
+        margin-bottom: 2.2rem;
+        font-size: 2.5rem;
+      }
+    }
+  }
+</style>

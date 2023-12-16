@@ -1,0 +1,161 @@
+<form method="post" id="contact-form">
+  <input
+    type="hidden"
+    name="access_key"
+    value="e0bb62ea-acf3-41ae-90e1-59d87f3f7090"
+  />
+  <div class="form__row">
+    <label for="name">Nombre</label>
+    <input id="name" name="Name" required placeholder="Pepito" />
+  </div>
+  <div class="form__row">
+    <label for="email">Correo</label>
+    <input
+      id="email"
+      type="email"
+      name="_replyto"
+      placeholder="example@example.com"
+      required
+    />
+  </div>
+  <div class="form__row">
+    <label for="message">Mensaje</label>
+    <textarea
+      id="message"
+      name="Message"
+      required
+      placeholder="Escriba su mensaje"></textarea>
+  </div>
+  <div class="form__button-wrapper">
+    <button class="button button--small">Enviar</button>
+  </div>
+</form>
+
+<style lang="scss">
+  @use "styles/screen";
+
+  form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    padding: 1.5rem;
+    margin-block: 1.5rem;
+    margin-inline: auto;
+    background-color: var(--background);
+    border: 1px solid var(--accents-2);
+    border-radius: 1rem;
+    box-shadow: var(--form-shadow);
+  }
+
+  .form {
+    &__button-wrapper {
+      align-self: center;
+
+      button {
+        color: hsl(0deg 0% 98%);
+        background-color: hsl(109deg 53% 20%);
+
+        &:disabled {
+          cursor: not-allowed;
+          background-color: hsl(0deg 0% 30%);
+        }
+
+        &:hover:enabled {
+          background-color: hsl(109deg 53% 18%);
+        }
+      }
+    }
+
+    &__row {
+      margin-bottom: 1rem;
+
+      label {
+        font-size: 14px;
+        color: var(--accents-7);
+      }
+
+      input {
+        width: 100%;
+        padding: 0.5rem;
+        color: var(--foreground);
+        background-color: inherit;
+        border: 1px solid var(--accents-4);
+        border-radius: 0.3rem;
+      }
+
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+        background-clip: text;
+        box-shadow: inset 0 0 20px 20px var(--accents-2);
+        transition: background-color 5000s ease-in-out 0s;
+        -webkit-text-fill-color: var(--foreground);
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 4.25rem;
+        padding: 0.5rem;
+        color: var(--foreground);
+        resize: vertical;
+        background-color: inherit;
+        border: 1px solid var(--accents-6);
+        border-radius: 0.3rem;
+      }
+    }
+
+    @media (min-width: screen.$md) {
+      padding: 2rem;
+    }
+
+    @media (min-width: screen.$lg) {
+      padding: 2rem 2.25rem;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById(
+    "contact-form"
+  ) as HTMLFormElement | null;
+  const result: HTMLButtonElement | null = document.querySelector(
+    ".form__button-wrapper button"
+  );
+
+  form?.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+    if (result) {
+      result.innerHTML = "Sending...";
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: json,
+      })
+        .then(async (response) => {
+          let json = await response.json();
+          if (response.status == 200) {
+            result.innerHTML = json.message;
+          } else {
+            console.log(response);
+            result.innerHTML = json.message;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          result.innerHTML = "Something went wrong!";
+        })
+        .then(function () {
+          result.disabled = true;
+          form.reset();
+        });
+    }
+  });
+</script>

@@ -1,0 +1,18 @@
+---
+import { Icon } from "astro-icon";
+---
+
+<button
+  class="button button--secondary button--icon"
+  aria-label="Toggle theme"
+  data-toggle-color-scheme
+>
+  <Icon name="lucide:sun" class="theme-icon" />
+  <Icon name="lucide:moon" class="theme-icon hidden" />
+</button>
+
+<style lang="scss">
+  [data-toggle-color-scheme] {
+    color: var(--accents-6);
+  }
+</style>
