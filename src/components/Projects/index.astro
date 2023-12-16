@@ -1,29 +1,28 @@
 ---
 import { Image } from 'astro:assets';
 import ticTacToeImage from './images/tic-tac-toe.png';
-import spacexTravelersImage from './images/space-x-travelers.png';
-import mathematiciansImage from './images/mathematicians-rn.png';
 import wordleImage from './images/wordle.png';
+import sisReport from './images/sisreport.jpg';
 
 import { Icon } from 'astro-icon';
 const PROJECTS = [
  
   {
-    name: 'Tic Tac Toe',
-    image: { src: ticTacToeImage, alt: 'Tic tac toe website' },
+    name: 'MEdiAlter',
+    image: { src: ticTacToeImage, alt: 'Tic Tac Toe' },
     description:
-      'Single page application where you can play Tic Tac Toe games versus a computer or another player.',
-    technologies: ['React', 'TypeScript', 'TailwindCSS'],
+      'Esta es una pagina en la cual se puede hacer el registro de la historia clinica de pacientes que acuden a la medicina alterna.',
+    technologies: ['HTML', 'CSS', 'JavaScript'],
     liveLink: 'https://tic-tac-toe-orlando.vercel.app/',
     sourceLink: 'https://github.com/orlandodiazc/tic-tac-toe',
   },
 
   {
-    name: 'Wordle',
-    image: { src: wordleImage, alt: 'Wordle website' },
+    name: 'SisReport',
+    image: { src: sisReport, alt: 'SisReport' },
     description:
-      'Wordle is a popular online video game, you have 6 chances to guess the correct 5 letter word or you will lose, give it a go!',
-    technologies: ['React', 'TypeScript', 'TailwindCSS'],
+      'Sistema de reporte de fallas de equipos de computo para instituciones educativas, en este caso para unimayor.',
+    technologies: ['Angular', 'Node', 'Sass'],
     liveLink: 'https://wordle-orlando.vercel.app/',
     sourceLink: 'https://github.com/orlandodiazc/wordle',
   },
@@ -49,6 +48,7 @@ const PROJECTS = [
                   alt={project.image.alt}
                 />
               </div>
+               
               <div>
                 <h3 class="medium-heading">{project.name}</h3>
                 <p class="small-p">{project.description}</p>
@@ -57,6 +57,7 @@ const PROJECTS = [
                     <li>{technology}</li>
                   ))}
                 </ul>
+           {/*     
                 <div class="project__links">
                   <a
                     class="button button--primary"
@@ -66,7 +67,7 @@ const PROJECTS = [
                     <span class="icon-wrapper--small">
                       <Icon name="lucide:link" class="icon-xs" />
                     </span>
-                    <span>See live</span>
+                    <span>Pagina</span>
                   </a>
                   <a
                     class="button button--secondary button--outline"
@@ -76,10 +77,12 @@ const PROJECTS = [
                     <span class="icon-wrapper--small">
                       <Icon name="lucide:github" class="icon-xs" />
                     </span>
-                    <span>See code</span>
+                    <span>Codigo</span>
                   </a>
                 </div>
+              */}        
               </div>
+              
             </article>
           </div>
         ))
