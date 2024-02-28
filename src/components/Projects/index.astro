@@ -3,29 +3,31 @@ import { Image } from 'astro:assets';
 import ticTacToeImage from './images/tic-tac-toe.png';
 import wordleImage from './images/wordle.png';
 import sisReport from './images/sisreport.jpg';
+import Formulario from './images/Formulario.png';
 
 import { Icon } from 'astro-icon';
 const PROJECTS = [
  
   {
-    name: 'MEdiAlter',
-    image: { src: ticTacToeImage, alt: 'Tic Tac Toe' },
+    name: 'Formulario de correo electronico',
+    image: { src: Formulario, alt: 'Formulario' },
     description:
-      'Esta es una pagina en la cual se puede hacer el registro de la historia clinica de pacientes que acuden a la medicina alterna.',
+      'Esta es una pagina en la cual se puede hacer el envio de un correo electronico, en donde se hace uso de una API.',
     technologies: ['HTML', 'CSS', 'JavaScript'],
     liveLink: 'https://tic-tac-toe-orlando.vercel.app/',
     sourceLink: 'https://github.com/orlandodiazc/tic-tac-toe',
   },
 
   {
-    name: 'SisReport',
-    image: { src: sisReport, alt: 'SisReport' },
+    name: 'PokemonNN',
+    image: { src: sisReport, alt: 'PokemonNN' },
     description:
-      'Sistema de reporte de fallas de equipos de computo para instituciones educativas, en este caso para unimayor.',
-    technologies: ['Angular', 'Node', 'Sass'],
-    liveLink: 'https://wordle-orlando.vercel.app/',
+      'Juego de cartas sobre Pokemon, en donde se aplico patrones de diseño, como el metodo fabrica y la fabrica abstracta, además se hizo uso de el modelo MVC.',
+    technologies: ['C#'],
     sourceLink: 'https://github.com/orlandodiazc/wordle',
   },
+
+  
 ];
 ---
 
