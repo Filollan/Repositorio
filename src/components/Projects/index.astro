@@ -1,30 +1,38 @@
 ---
 import { Image } from 'astro:assets';
-import ticTacToeImage from './images/tic-tac-toe.png';
-import wordleImage from './images/wordle.png';
+
 import sisReport from './images/sisreport.jpg';
-import Formulario from './images/Formulario.png';
+import Mantenimiento from './images/mantenimientoo.jpg';
+import Habitos from './images/habitos.jpg';
 
 import { Icon } from 'astro-icon';
 const PROJECTS = [
  
   {
-    name: 'Formulario de correo electronico',
-    image: { src: Formulario, alt: 'Formulario' },
+    name: 'Habits',
+    image: { src: Habitos, alt: 'Habitos' },
     description:
-      'Esta es una pagina en la cual se puede hacer el envio de un correo electronico, en donde se hace uso de una API.',
-    technologies: ['HTML', 'CSS', 'JavaScript'],
-    liveLink: 'https://tic-tac-toe-orlando.vercel.app/',
-    sourceLink: 'https://github.com/orlandodiazc/tic-tac-toe',
+      'Esta es una pagina web en la cual se puede gestionar habitos y tareas del dia a dia, desarrollada con el stack MEVN.',
+    technologies: ['MongoDB', 'Express', 'Vue.js', 'Node.js'],
+    liveLink: 'https://miguel-llanten.vercel.app',
+    sourceLink: 'https://github.com/Filollan/GESTIONARTAREAS',
   },
-
+  {
+    name: 'Mantenimiento de equipos',
+    image: { src: Mantenimiento, alt: 'Mantenimiento' },
+    description:
+      'Esta es una pagina web en la cual se puede hacer el mantenimiento de equipos en una institucion educativa, haciendo uso de bases de datos',
+    technologies: ['PHP', 'MySQL', 'Boostrap'],
+    liveLink: 'https://miguel-llanten.vercel.app/',
+    sourceLink: 'https://github.com/Filollan/Mantenimiento_equipos',
+  },
   {
     name: 'PokemonNN',
     image: { src: sisReport, alt: 'PokemonNN' },
     description:
       'Juego de cartas sobre Pokemon, en donde se aplico patrones de diseño, como el metodo fabrica y la fabrica abstracta, además se hizo uso de el modelo MVC.',
     technologies: ['C#'],
-    sourceLink: 'https://github.com/orlandodiazc/wordle',
+    liveLink: 'https://miguel-llanten.vercel.app/'
   },
 
   
@@ -59,10 +67,10 @@ const PROJECTS = [
                     <li>{technology}</li>
                   ))}
                 </ul>
-           {/*     
+           {     
                 <div class="project__links">
-                  <a
-                    class="button button--primary"
+                   <a
+                  class="button button--primary"
                     target="_blank"
                     href={project.liveLink}
                   >
@@ -70,7 +78,7 @@ const PROJECTS = [
                       <Icon name="lucide:link" class="icon-xs" />
                     </span>
                     <span>Pagina</span>
-                  </a>
+                  </a> 
                   <a
                     class="button button--secondary button--outline"
                     target="_blank"
@@ -82,7 +90,7 @@ const PROJECTS = [
                     <span>Codigo</span>
                   </a>
                 </div>
-              */}        
+              }        
               </div>
               
             </article>
