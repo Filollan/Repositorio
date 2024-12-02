@@ -1,0 +1,131 @@
+---
+import { Image } from 'astro:assets';
+import diplomaVue from './images/diploma-vue.jpg';
+import diplomaPhp from './images/diploma-phpp.jpg';
+import diplomaLaravel from './images/diploma-laravel.jpg';
+import diplomaReact from './images/diploma-react.jpg';
+import diplomaNode from './images/diploma-node.jpg';  
+import diplomaJs from './images/diploma-Javascript.jpg';
+import diplomaB1 from './images/Certificado-B1.jpg';
+import diplomaIA from './images/diploma-ia.jpg';
+import diplomaWeb from './images/Certificado-web.png';
+
+
+const CERTIFICATES = [
+{
+    title: "Certificado en HTML, CSS y Javascript",
+    image: { src: diplomaWeb, alt: 'Certificado en HTML, CSS y Javascript' },
+  },
+{
+    title: "Certificado B1",
+    image: { src: diplomaB1, alt: 'Certificado de B1' },
+  },
+  {
+    title: "Certificado en PHP",
+    image: { src: diplomaPhp, alt: 'Certificado en PHP' },
+  },
+  {
+    title: "Certificado en Laravel",
+    image: { src: diplomaLaravel, alt: 'Certificado en Laravel' },
+  },
+ 
+  {
+    title: "Certificado en Javascript",
+    image: { src: diplomaJs, alt: 'Certificado en Javascript' },
+  },
+  {
+    title: "Certificado en Vue.js",
+    image: { src: diplomaVue, alt: 'Certificado en Vue.js' },
+  },
+  {
+    title: "Certificado en Inteligencia Artificial",
+    image: { src: diplomaIA, alt: 'Certificado en fundamentos en IA' },
+  },
+  {
+    title: "Certificado en React y redux",
+    image: { src: diplomaReact, alt: 'Certificado en React y redux' },
+  },
+  {
+    title: "Certificado en Node.js",
+    image: { src: diplomaNode, alt: 'Certificado en Node.js' },
+  },
+  
+];
+---
+
+<section class="certificates section" id="certificates">
+  <h2 class="section__title">Certificados</h2>
+  <div class="certificates__list">
+    {CERTIFICATES.map((certificate) => (
+      <div class="certificates__item">
+        <Image
+          class="certificates__image"
+          src={certificate.image.src}
+          alt={certificate.image.alt}
+          width={300}
+          height={200}
+        />
+        <h3 class="certificates__title">{certificate.title}</h3>
+      </div>
+    ))}
+  </div>
+</section>
+
+
+<style lang="scss">
+  .certificates {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  gap: 2rem;
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  &__item {
+    background-color: var(--background);
+    border: 1px solid var(--accents-2);
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    padding: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--text-color);
+  }
+}
+
+/* Media queries para ajustar en pantallas pequeñas */
+@media (max-width: 768px) {
+  .certificates {
+    padding: 1rem;
+
+    &__title {
+      font-size: 1rem;
+    }
+  }
+}
+
+</style>

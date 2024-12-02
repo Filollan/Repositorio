@@ -4,10 +4,40 @@ import { Image } from 'astro:assets';
 import sisReport from './images/sisreport.jpg';
 import Mantenimiento from './images/mantenimientoo.jpg';
 import Habitos from './images/habitos.jpg';
+import GestiHorarios from './images/GestiHorarios.png';
+import CryptoSalud from './images/CryptoSalud.png';
 
 import { Icon } from 'astro-icon';
 const PROJECTS = [
  
+  {
+    name: 'CryptoSalud',
+    image: { src: CryptoSalud, alt: 'CryptoSalud' },
+    description:
+      'Pagina web de historias de usuario implementando blockchain y docker',
+    technologies: ['Vue.js', 'Express', 'Node.js', 'MongoDB', 'Docker'],
+    liveLink: 'https://miguel-llanten.vercel.app/',
+    sourceLink: 'https://github.com/Filollan/Mantenimiento_equipos',
+  },
+  {
+    name: 'GestiHorarios',
+    image: { src: GestiHorarios, alt: 'GestiHorarios' },
+    description:
+      'Aplicación web para hacer la gestion los horarios de docentes de una institución', 
+    technologies: ['Laravel', 'Boostrap', 'MySQL', 'Apache'],   
+    liveLink: 'https://miguel-llanten.vercel.app/',
+    sourceLink: 'https://github.com/Filollan/Mantenimiento_equipos',
+  },
+
+  {
+    name: 'Mantenimiento',
+    image: { src: Mantenimiento, alt: 'Mantenimiento' },
+    description:
+      'Pagina web para la gestion de mantenimiento de equipos de una empresa',
+    technologies: ['Vue.js', 'Express', 'Node.js', 'MongoDB'],
+    liveLink: 'https://miguel-llanten.vercel.app/',
+    sourceLink: 'https://github.com/Filollan/Mantenimiento_equipos',
+  },
   {
     name: 'Habits',
     image: { src: Habitos, alt: 'Habitos' },
@@ -17,24 +47,6 @@ const PROJECTS = [
     liveLink: 'https://miguel-llanten.vercel.app',
     sourceLink: 'https://github.com/Filollan/GESTIONARTAREAS',
   },
-  {
-    name: 'Mantenimiento de equipos',
-    image: { src: Mantenimiento, alt: 'Mantenimiento' },
-    description:
-      'Esta es una pagina web en la cual se puede hacer el mantenimiento de equipos en una institucion educativa, haciendo uso de bases de datos',
-    technologies: ['PHP', 'MySQL', 'Boostrap'],
-    liveLink: 'https://miguel-llanten.vercel.app/',
-    sourceLink: 'https://github.com/Filollan/Mantenimiento_equipos',
-  },
-  {
-    name: 'PokemonNN',
-    image: { src: sisReport, alt: 'PokemonNN' },
-    description:
-      'Juego de cartas sobre Pokemon, en donde se aplico patrones de diseño, como el metodo fabrica y la fabrica abstracta, además se hizo uso de el modelo MVC.',
-    technologies: ['C#'],
-    liveLink: 'https://miguel-llanten.vercel.app/'
-  },
-
   
 ];
 ---
