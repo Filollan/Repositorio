@@ -10,13 +10,12 @@ import diplomaB1 from './images/Certificado-B1.jpg';
 import diplomaIA from './images/diploma-ia.jpg';
 import diplomaWeb from './images/Certificado-web.png';
 
-
 const CERTIFICATES = [
-{
+  {
     title: "Certificado en HTML, CSS y Javascript",
     image: { src: diplomaWeb, alt: 'Certificado en HTML, CSS y Javascript' },
   },
-{
+  {
     title: "Certificado B1",
     image: { src: diplomaB1, alt: 'Certificado de B1' },
   },
@@ -28,7 +27,6 @@ const CERTIFICATES = [
     title: "Certificado en Laravel",
     image: { src: diplomaLaravel, alt: 'Certificado en Laravel' },
   },
- 
   {
     title: "Certificado en Javascript",
     image: { src: diplomaJs, alt: 'Certificado en Javascript' },
@@ -49,12 +47,22 @@ const CERTIFICATES = [
     title: "Certificado en Node.js",
     image: { src: diplomaNode, alt: 'Certificado en Node.js' },
   },
-  
 ];
 ---
 
 <section class="certificates section" id="certificates">
+  <div class="particles-container" aria-hidden="true">
+    <canvas 
+      class="particles-canvas"
+      data-particle-animation
+      width="100%"
+      height="100%"
+      style="width: 100%; height: 100%;">
+    </canvas>
+  </div>
+  
   <h2 class="section__title">Certificados</h2>
+  
   <div class="certificates__list">
     {CERTIFICATES.map((certificate) => (
       <div class="certificates__item">
@@ -71,61 +79,111 @@ const CERTIFICATES = [
   </div>
 </section>
 
-
 <style lang="scss">
   .certificates {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem 1rem;
-  gap: 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    gap: 2rem;
+    overflow: hidden;
+    min-height: 100vh;
 
-  &__list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 1200px;
-  }
-
-  &__item {
-    background-color: var(--background);
-    border: 1px solid var(--accents-2);
-    border-radius: 0.5rem;
-    box-shadow: var(--shadow-sm);
-    text-align: center;
-    padding: 1rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-md);
+    .particles-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
     }
-  }
 
-  &__image {
-    width: 100%;
-    height: auto;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-  }
+    &__list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1200px;
+    }
 
-  &__title {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: var(--text-color);
-  }
-}
+    &__item {
+      background-color: var(--background);
+      border: 1px solid var(--accents-2);
+      border-radius: 0.5rem;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      padding: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-/* Media queries para ajustar en pantallas pequeñas */
-@media (max-width: 768px) {
-  .certificates {
-    padding: 1rem;
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+      }
+    }
+
+    &__image {
+      width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      object-fit: cover;
+    }
 
     &__title {
-      font-size: 1rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--text-color);
+      margin-top: 0.5rem;
     }
   }
-}
 
+  /* Media queries para ajustar en pantallas pequeñas */
+  @media (max-width: 768px) {
+    .certificates {
+      padding: 1rem;
+
+      &__title {
+        font-size: 1rem;
+      }
+
+      &__list {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+    }
+  }
+
+  .section__title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--accents-8);
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 </style>
+
+<script>
+  import { ParticleAnimation } from '../../utils/particles';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.querySelector('.certificates [data-particle-animation]');
+    if (!(canvas instanceof HTMLCanvasElement)) return;
+
+    const certificatesParticles = new ParticleAnimation(canvas, {
+      quantity: 15,
+      staticity: 2,
+      ease: 30,
+      particleColor: {
+        light: 'rgba(255, 0, 0, 0.6)',
+        dark: 'rgba(255, 255, 255, 0.6)'
+      }
+    });
+
+    // Limpieza cuando el componente se desmonta
+    document.addEventListener('astro:before-swap', () => {
+      certificatesParticles.destroy();
+    });
+  });
+</script>
