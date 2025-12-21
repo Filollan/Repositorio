@@ -1,31 +1,14 @@
-<!--
-HOW TO USE:
-This is an example of how you may give instructions on setting up your project locally.
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/Filollan/portfolio-web">
+    <img src="https://user-images.githubusercontent.com/107340619/210187937-d9a1e5e7-a5a9-4e0a-b8e8-e6e1d0f1c3e9.png" alt="Logo" width="80" height="80">
+  </a>
 
-Modify this file to match your project and remove sections that don't apply.
+  <h3 align="center">Portfolio Web</h3>
 
-REQUIRED SECTIONS:
-- Table of Contents
-- About the Project
-  - Built With
-  - Live Demo
-- Getting Started
-- Authors
-- Future Features
-- Contributing
-- Show your support
-- Acknowledgements
-- License
+  <p align="center">
 
-OPTIONAL SECTIONS:
-- FAQ
-
-After you're finished please remove all the comments and instructions!
--->
-
-# Portfolio <a name="about-project"></a>
-
-**Portfolio** is a webpage built with Astro and Sass that shows information about me and my projects.
 
 
 ## Built With <a name="built-with"></a>
@@ -43,24 +26,26 @@ This project was created using:
 
 <!-- Features -->
 
-## Getting Started <a name="getting-started"></a>
+## 🚀 Features <a name="features"></a>
 
-To get a local copy up and running, follow these steps.
+- 📱 Responsive
+- 💻 TypeScript
+- 🎨 Sass
+- 📦 Astro
+- 📝 Markdown
+- 📜 License
+- 📚 README
+- 💬 Contact
+- 📄 Projects
+- 📄 Certificates
+- 📄 About
+- 📄 Contact
+- 📄 Footer     
 
-1. Clone the repository into your machine (Or download the .zip file and extract).
-2. Open the project's folder.
-3. Run pnpm install
-4. Run pmpm run dev
+<!-- GETTING STARTED -->
+para instalar el proyecto localmente tienes que seguir los siguientes pasos:  
+1. Clonar el repositorio en tu computadora.
+2. Abrir el proyecto en tu computadora.
+3. Ejecutar pnpm install.
+4. Ejecutar pnpm run dev.
 
-
-<!-- FUTURE FEATURES -->
-
-## ⭐️ Show your support <a name="support"></a>
-
-Give a star if you like this project!
-
-<!-- LICENSE -->
-
-## 📝 License <a name="license"></a>
-
-This project is [MIT](./LICENSE) licensed.

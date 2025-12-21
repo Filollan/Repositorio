@@ -1,21 +1,21 @@
 ---
-import { Image } from 'astro:assets';
-import diplomaVue from './images/diploma-vue.jpg';
-import diplomaPhp from './images/diploma-phpp.jpg';
+import { Image } from "astro:assets";
+import diplomaVue from "./images/diploma-vue.jpg";
+/* import diplomaPhp from './images/diploma-phpp.jpg';
 import diplomaLaravel from './images/diploma-laravel.jpg';
 import diplomaReact from './images/diploma-react.jpg';
-import diplomaNode from './images/diploma-node.jpg';  
-import diplomaJs from './images/diploma-JavaScript.jpg';
-import diplomaB1 from './images/Certificado-B1.jpg';
-import diplomaIA from './images/diploma-ia.jpg';
-import diplomaWeb from './images/Certificado-programacion.png';
+import diplomaNode from './images/diploma-node.jpg'; */
+import diplomaJs from "./images/diploma-JavaScript.jpg";
+/* import diplomaB1 from './images/Certificado-B1.jpg'; */
+import diplomaIA from "./images/diploma-ia.jpg";
+import diplomaWeb from "./images/Certificado-programacion.png";
 
 const CERTIFICATES = [
   {
     title: "Certificado en HTML, CSS y Javascript",
-    image: { src: diplomaWeb, alt: 'Certificado en HTML, CSS y Javascript' },
+    image: { src: diplomaWeb, alt: "Certificado en HTML, CSS y Javascript" },
   },
-  {
+  /* {
     title: "Certificado B1",
     image: { src: diplomaB1, alt: 'Certificado de B1' },
   },
@@ -26,56 +26,59 @@ const CERTIFICATES = [
   {
     title: "Certificado en Laravel",
     image: { src: diplomaLaravel, alt: 'Certificado en Laravel' },
-  },
+  }, */
   {
     title: "Certificado en Javascript",
-    image: { src: diplomaJs, alt: 'Certificado en Javascript' },
+    image: { src: diplomaJs, alt: "Certificado en Javascript" },
   },
   {
     title: "Certificado en Vue.js",
-    image: { src: diplomaVue, alt: 'Certificado en Vue.js' },
+    image: { src: diplomaVue, alt: "Certificado en Vue.js" },
   },
   {
     title: "Certificado en Inteligencia Artificial",
-    image: { src: diplomaIA, alt: 'Certificado en fundamentos en IA' },
+    image: { src: diplomaIA, alt: "Certificado en fundamentos en IA" },
   },
-  {
+  /* {
     title: "Certificado en React y redux",
     image: { src: diplomaReact, alt: 'Certificado en React y redux' },
   },
   {
     title: "Certificado en Node.js",
     image: { src: diplomaNode, alt: 'Certificado en Node.js' },
-  },
+  }, */
 ];
 ---
 
 <section class="certificates section" id="certificates">
   <div class="particles-container" aria-hidden="true">
-    <canvas 
+    <canvas
       class="particles-canvas"
       data-particle-animation
       width="100%"
       height="100%"
-      style="width: 100%; height: 100%;">
+      style="width: 100%; height: 100%;"
+    >
     </canvas>
   </div>
-  
+
   <h2 class="section__title">Certificados</h2>
-  
+
   <div class="certificates__list">
-    {CERTIFICATES.map((certificate) => (
-      <div class="certificates__item">
-        <Image
-          class="certificates__image"
-          src={certificate.image.src}
-          alt={certificate.image.alt}
-          width={300}
-          height={200}
-        />
-        <h3 class="certificates__title">{certificate.title}</h3>
-      </div>
-    ))}
+    {
+      CERTIFICATES.map((certificate) => (
+        <div class="certificates__item">
+          <Image
+            class="certificates__image"
+            src={certificate.image.src}
+            alt={certificate.image.alt}
+            width={300}
+            height={200}
+          />
+          <h3 class="certificates__title">{certificate.title}</h3>
+        </div>
+      ))
+    }
   </div>
 </section>
 
@@ -115,7 +118,9 @@ const CERTIFICATES = [
       box-shadow: var(--shadow-sm);
       text-align: center;
       padding: 1rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 
       &:hover {
         transform: translateY(-5px);
@@ -165,10 +170,12 @@ const CERTIFICATES = [
 </style>
 
 <script>
-  import { ParticleAnimation } from '../../utils/particles';
+  import { ParticleAnimation } from "../../utils/particles";
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.querySelector('.certificates [data-particle-animation]');
+  document.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.querySelector(
+      ".certificates [data-particle-animation]",
+    );
     if (!(canvas instanceof HTMLCanvasElement)) return;
 
     const certificatesParticles = new ParticleAnimation(canvas, {
@@ -176,13 +183,13 @@ const CERTIFICATES = [
       staticity: 2,
       ease: 30,
       particleColor: {
-        light: 'rgba(255, 0, 0, 0.6)',
-        dark: 'rgba(255, 255, 255, 0.6)'
-      }
+        light: "rgba(255, 0, 0, 0.6)",
+        dark: "rgba(255, 255, 255, 0.6)",
+      },
     });
 
     // Limpieza cuando el componente se desmonta
-    document.addEventListener('astro:before-swap', () => {
+    document.addEventListener("astro:before-swap", () => {
       certificatesParticles.destroy();
     });
   });
