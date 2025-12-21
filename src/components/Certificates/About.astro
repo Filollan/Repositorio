@@ -66,19 +66,36 @@ const CERTIFICATES = [
 
   <div class="certificates__list">
     {
-      CERTIFICATES.map((certificate) => (
-        <div class="certificates__item">
-          <Image
-            class="certificates__image"
-            src={certificate.image.src}
-            alt={certificate.image.alt}
-            width={300}
-            height={200}
-          />
+      CERTIFICATES.map((certificate, index) => (
+        <div class="certificates__item" data-inviewport>
+          <button
+            class="certificates__image-wrapper"
+            data-certificate-index={index}
+            aria-label={`Ver ${certificate.title} en grande`}
+          >
+            <Image
+              class="certificates__image"
+              src={certificate.image.src}
+              alt={certificate.image.alt}
+              width={300}
+              height={200}
+            />
+            <div class="certificates__overlay">
+              <span class="certificates__zoom-icon">🔍</span>
+            </div>
+          </button>
           <h3 class="certificates__title">{certificate.title}</h3>
         </div>
       ))
     }
+  </div>
+
+  <!-- Modal Lightbox -->
+  <div class="lightbox" id="certificate-lightbox" aria-hidden="true">
+    <button class="lightbox__close" aria-label="Cerrar">&times;</button>
+    <div class="lightbox__content">
+      <img class="lightbox__image" src="" alt="" />
+    </div>
   </div>
 </section>
 
@@ -114,18 +131,55 @@ const CERTIFICATES = [
     &__item {
       background-color: var(--background);
       border: 1px solid var(--accents-2);
-      border-radius: 0.5rem;
-      box-shadow: var(--shadow-sm);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-md);
       text-align: center;
       padding: 1rem;
-      transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+      transition: var(--transition-smooth);
+      overflow: hidden;
 
       &:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-md);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: var(--shadow-xl);
+        border-color: var(--accents-3);
       }
+    }
+
+    &__image-wrapper {
+      position: relative;
+      display: block;
+      width: 100%;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      overflow: hidden;
+      border-radius: var(--border-radius-md);
+    }
+
+    &__overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transition: var(--transition-smooth);
+    }
+
+    &__image-wrapper:hover &__overlay {
+      opacity: 1;
+    }
+
+    &__zoom-icon {
+      font-size: 3rem;
+      transform: scale(0.8);
+      transition: var(--transition-smooth);
+    }
+
+    &__image-wrapper:hover &__zoom-icon {
+      transform: scale(1);
     }
 
     &__image {
@@ -167,6 +221,63 @@ const CERTIFICATES = [
     text-align: center;
     margin-bottom: 2rem;
   }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.95);
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    &__close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      font-size: 2.5rem;
+      color: white;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transition: var(--transition-smooth);
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.8);
+        transform: rotate(90deg) scale(1.1);
+      }
+    }
+
+    &__content {
+      max-width: 90vw;
+      max-height: 90vh;
+      padding: 1rem;
+    }
+
+    &__image {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-elevated);
+      animation: zoomIn 0.4s ease-out;
+    }
+  }
 </style>
 
 <script>
@@ -191,6 +302,61 @@ const CERTIFICATES = [
     // Limpieza cuando el componente se desmonta
     document.addEventListener("astro:before-swap", () => {
       certificatesParticles.destroy();
+    });
+
+    // Lightbox functionality
+    const lightbox = document.getElementById("certificate-lightbox");
+    const lightboxImage = lightbox?.querySelector(
+      ".lightbox__image",
+    ) as HTMLImageElement;
+    const lightboxClose = lightbox?.querySelector(".lightbox__close");
+    const certificateButtons = document.querySelectorAll(
+      "[data-certificate-index]",
+    );
+
+    const openLightbox = (imageSrc: string, imageAlt: string) => {
+      if (!lightbox || !lightboxImage) return;
+
+      lightboxImage.src = imageSrc;
+      lightboxImage.alt = imageAlt;
+      lightbox.classList.add("active");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeLightbox = () => {
+      if (!lightbox) return;
+
+      lightbox.classList.remove("active");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    };
+
+    // Event listeners para cada certificado
+    certificateButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const img = button.querySelector(
+          ".certificates__image",
+        ) as HTMLImageElement;
+        if (img) {
+          openLightbox(img.src, img.alt);
+        }
+      });
+    });
+
+    // Cerrar lightbox
+    lightboxClose?.addEventListener("click", closeLightbox);
+    lightbox?.addEventListener("click", (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // Cerrar con tecla Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox?.classList.contains("active")) {
+        closeLightbox();
+      }
     });
   });
 </script>

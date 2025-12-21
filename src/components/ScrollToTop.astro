@@ -1,0 +1,123 @@
+---
+import { Icon } from "astro-icon";
+---
+
+<button
+    id="scroll-to-top"
+    class="scroll-to-top"
+    aria-label="Volver arriba"
+    title="Volver arriba"
+>
+    <Icon name="lucide:arrow-up" />
+</button>
+
+<style lang="scss">
+    .scroll-to-top {
+        position: fixed;
+        right: 1.5rem;
+        bottom: 1.5rem;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        padding: 0.75rem;
+        color: var(--background);
+        cursor: pointer;
+        background: var(--primary-gradient);
+        border: none;
+        border-radius: 50%;
+        box-shadow: var(--shadow-lg);
+        opacity: 0;
+        transform: translateY(100px);
+        transition: var(--transition-smooth);
+        pointer-events: none;
+
+        &.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        &:hover {
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: var(--shadow-xl), var(--shadow-glow);
+        }
+
+        &:active {
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 4px;
+        }
+
+        /* Animación de pulso sutil */
+        &.visible::after {
+            content: "";
+            position: absolute;
+            inset: -4px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    }
+
+    @keyframes pulse-ring {
+        0% {
+            transform: scale(0.95);
+            opacity: 0.5;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1.15);
+            opacity: 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .scroll-to-top {
+            right: 1rem;
+            bottom: 1rem;
+            width: 2.75rem;
+            height: 2.75rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const scrollToTopButton = document.getElementById("scroll-to-top");
+
+        if (!scrollToTopButton) return;
+
+        // Mostrar/ocultar botón basado en scroll
+        const toggleVisibility = () => {
+            if (window.scrollY > 500) {
+                scrollToTopButton.classList.add("visible");
+            } else {
+                scrollToTopButton.classList.remove("visible");
+            }
+        };
+
+        // Scroll suave al inicio
+        const scrollToTop = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        };
+
+        // Event listeners
+        window.addEventListener("scroll", toggleVisibility);
+        scrollToTopButton.addEventListener("click", scrollToTop);
+
+        // Verificar estado inicial
+        toggleVisibility();
+    });
+</script>

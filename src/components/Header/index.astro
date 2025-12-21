@@ -93,9 +93,7 @@ const navItems = [
       justify-content: center;
       min-height: 4rem;
       background-color: var(--background);
-      transition:
-        box-shadow 200ms ease 0s,
-        background-color 200ms ease 0s;
+      transition: var(--transition-smooth);
 
       @media (min-width: screen.$md) {
         background-color: var(--header-background);
@@ -175,11 +173,38 @@ const navItems = [
     }
 
     &__link {
+      position: relative;
       color: var(--accents-5);
-      transition: 200ms ease-in-out;
+      transition: var(--transition-smooth);
+      padding-bottom: 4px;
+
+      /* Indicador de link activo */
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary-gradient);
+        transition: var(--transition-smooth);
+      }
 
       &:hover {
         color: var(--foreground);
+
+        &::after {
+          width: 100%;
+        }
+      }
+
+      &.active {
+        color: var(--primary);
+        font-weight: 600;
+
+        &::after {
+          width: 100%;
+        }
       }
     }
   }
@@ -221,7 +246,7 @@ const navItems = [
     const mobileMenuLinks = document.querySelectorAll(".mobile-menu__link");
 
     mobileMenuLinks.forEach((link) =>
-      link.addEventListener("click", toggleMobileNav)
+      link.addEventListener("click", toggleMobileNav),
     );
 
     window.addEventListener("resize", () => {
@@ -238,7 +263,7 @@ const navItems = [
     function onScrollHandler() {
       headerWrapper?.classList.toggle(
         "header__border-onscroll",
-        root.scrollTop !== 0
+        root.scrollTop !== 0,
       );
     }
 

@@ -1,26 +1,27 @@
 ---
 import { Icon } from "astro-icon";
 ---
+
 <div class="hero__wrapper">
   <!-- Partículas animadas -->
   <div class="particle-container">
-    <canvas 
+    <canvas
       class="particle-canvas"
       data-particle-animation
       width="100%"
       height="100%"
-      style="width: 100%; height: 100%;">
+      style="width: 100%; height: 100%;"
+    >
     </canvas>
   </div>
   <!-- Contenido principal del héroe -->
-  <section class="hero container" data-inviewport>
-    <h1 class="hero__title">
-        Miguel Llanten
-    </h1>
+  <section class="hero container" data-inviewport id="top">
+    <h1 class="hero__title">Miguel Llanten</h1>
     <h2 class="hero__subtitle">Desarrollador Web</h2>
     <p class="section__description">
-      ¡Hola! Soy estudiante de Ingeniería Informática en los últimos semestres y desarrollador web,
-      con experiencia en el desarrollo de aplicaciones web para sectores educativos y empresariales.
+      ¡Hola! Soy estudiante de Ingeniería Informática en los últimos semestres y
+      desarrollador web, con experiencia en el desarrollo de aplicaciones web
+      para sectores educativos y empresariales.
     </p>
     <div class="hero__buttons">
       <div>
@@ -81,11 +82,13 @@ import { Icon } from "astro-icon";
     }
 
     .section__description {
-      font-size: 1.3rem; 
-      color: var(--accents-7); 
-      line-height: 1.5; 
-      max-width: 800px; 
+      font-size: 1.3rem;
+      color: var(--accents-7);
+      line-height: 1.5;
+      max-width: 800px;
       margin-inline: auto;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out 0.4s forwards;
     }
 
     &__title {
@@ -95,6 +98,8 @@ import { Icon } from "astro-icon";
       line-height: 1.05;
       color: var(--accents-8);
       letter-spacing: -0.04em;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
     }
 
     &__subtitle {
@@ -104,6 +109,8 @@ import { Icon } from "astro-icon";
       line-height: 1;
       color: var(--primary);
       letter-spacing: -0.04em;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out 0.2s forwards;
     }
 
     &__buttons {
@@ -113,9 +120,16 @@ import { Icon } from "astro-icon";
       align-items: center;
       justify-content: center;
       width: 100%;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out 0.6s forwards;
 
       a {
         text-decoration: none;
+        transition: var(--transition-smooth);
+
+        &:hover {
+          transform: translateY(-2px);
+        }
       }
     }
 
@@ -149,12 +163,11 @@ import { Icon } from "astro-icon";
   }
 </style>
 
-
 <script>
-  import { ParticleAnimation } from '../utils/particles';
+  import { ParticleAnimation } from "../utils/particles";
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.querySelector('[data-particle-animation]');
+  document.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.querySelector("[data-particle-animation]");
     if (!(canvas instanceof HTMLCanvasElement)) return;
 
     // Puedes personalizar las opciones para cada sección si lo deseas
@@ -163,13 +176,13 @@ import { Icon } from "astro-icon";
       staticity: 3,
       ease: 50,
       particleColor: {
-        light: 'rgba(255, 0, 0, 0.6)',
-        dark: 'rgba(255, 255, 255, 0.6)'
-      }
+        light: "rgba(255, 0, 0, 0.6)",
+        dark: "rgba(255, 255, 255, 0.6)",
+      },
     });
 
     // Limpieza cuando el componente se desmonta
-    document.addEventListener('astro:before-swap', () => {
+    document.addEventListener("astro:before-swap", () => {
       particleAnimation.destroy();
     });
   });

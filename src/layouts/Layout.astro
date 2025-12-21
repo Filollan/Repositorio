@@ -1,6 +1,8 @@
 ---
-import 'styles/global.scss';
-import '@fontsource-variable/inter';
+import "styles/global.scss";
+import "@fontsource-variable/inter";
+import ScrollToTop from "components/ScrollToTop.astro";
+
 interface Props {
   title: string;
 }
@@ -12,29 +14,29 @@ const { title } = Astro.props;
 <html lang="en">
   <head>
     <script is:inline>
-    function applyTheme(theme) {
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
+      function applyTheme(theme) {
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
       }
-    }
 
-    const defaultTheme = 'system';
-    if (
-      (defaultTheme && defaultTheme.endsWith(':only')) ||
-      (!localStorage.theme && defaultTheme !== 'system')
-    ) {
-      applyTheme(defaultTheme.replace(':only', ''));
-    } else if (
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      applyTheme('dark');
-    } else {
-      applyTheme('light');
-    }
+      const defaultTheme = "system";
+      if (
+        (defaultTheme && defaultTheme.endsWith(":only")) ||
+        (!localStorage.theme && defaultTheme !== "system")
+      ) {
+        applyTheme(defaultTheme.replace(":only", ""));
+      } else if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        applyTheme("dark");
+      } else {
+        applyTheme("light");
+      }
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -55,38 +57,41 @@ const { title } = Astro.props;
     />
     <meta property="og:image" content="/opengraph-image.png" />
 
-    <meta
-      name="description"
-      content="Mira mas informacion sobre Miguel."
-    />
+    <meta name="description" content="Mira mas informacion sobre Miguel." />
     <title>{title}</title>
   </head>
   <body>
+    <!-- Indicador de progreso de scroll -->
+    <div class="scroll-progress-bar"></div>
+
     <slot />
+
+    <!-- Botón scroll to top -->
+    <ScrollToTop />
   </body>
 </html>
 
 <script>
-  const themeToggler = document.querySelectorAll('[data-toggle-color-scheme]');
+  const themeToggler = document.querySelectorAll("[data-toggle-color-scheme]");
   themeToggler.forEach((elem) =>
-    elem.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-      localStorage.theme = document.documentElement.classList.contains('dark')
-        ? 'dark'
-        : 'light';
+    elem.addEventListener("click", () => {
+      document.documentElement.classList.toggle("dark");
+      localStorage.theme = document.documentElement.classList.contains("dark")
+        ? "dark"
+        : "light";
       document
-        .querySelectorAll('.theme-icon')
-        .forEach((elem) => elem.classList.toggle('hidden'));
-    })
+        .querySelectorAll(".theme-icon")
+        .forEach((elem) => elem.classList.toggle("hidden"));
+    }),
   );
 
   const inViewport = (
     entries: IntersectionObserverEntry[],
-    observer: IntersectionObserver
+    observer: IntersectionObserver,
   ) => {
     entries.forEach((entry: IntersectionObserverEntry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('fade');
+        entry.target.classList.add("fade");
         observer.unobserve(entry.target);
       }
     });
@@ -94,7 +99,90 @@ const { title } = Astro.props;
 
   const Obs = new IntersectionObserver(inViewport, { threshold: 0.3 });
 
-  document.querySelectorAll<HTMLElement>('[data-inviewport]').forEach((el) => {
+  document.querySelectorAll<HTMLElement>("[data-inviewport]").forEach((el) => {
     Obs.observe(el);
   });
+
+  // Indicador de progreso de scroll
+  const progressBar = document.querySelector<HTMLElement>(
+    ".scroll-progress-bar",
+  );
+
+  const updateScrollProgress = () => {
+    if (!progressBar) return;
+    const scrolled =
+      (window.scrollY /
+        (document.documentElement.scrollHeight - window.innerHeight)) *
+      100;
+    progressBar.style.width = Math.min(scrolled, 100) + "%";
+  };
+
+  window.addEventListener("scroll", updateScrollProgress, { passive: true });
+  updateScrollProgress();
+
+  // Actualizar links activos en navegación
+  const updateActiveNavLink = () => {
+    const sections = document.querySelectorAll<HTMLElement>("section[id]");
+    const navLinks = document.querySelectorAll<HTMLAnchorElement>(
+      ".navigation-menu__link, .mobile-menu__link",
+    );
+
+    const scrollPosition = window.scrollY;
+
+    // Si estamos en la parte superior (menos de 200px), activar "Inicio"
+    if (scrollPosition < 200) {
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === "#top") {
+          link.classList.add("active");
+        }
+      });
+      return;
+    }
+
+    // Para el resto de secciones
+    let currentSection: string | null = null;
+    const offset = 150; // Offset para el header
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      const sectionId = section.id;
+
+      if (
+        scrollPosition >= sectionTop - offset &&
+        scrollPosition < sectionTop + sectionHeight - offset
+      ) {
+        currentSection = sectionId;
+      }
+    });
+
+    // Actualizar estados activos
+    navLinks.forEach((link) => {
+      link.classList.remove("active");
+      if (
+        currentSection &&
+        link.getAttribute("href") === `#${currentSection}`
+      ) {
+        link.classList.add("active");
+      }
+    });
+  };
+
+  window.addEventListener("scroll", updateActiveNavLink, { passive: true });
+  updateActiveNavLink();
 </script>
+
+<style>
+  .scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 0%;
+    height: 3px;
+    background: var(--primary-gradient);
+    transition: width 0.1s ease-out;
+    box-shadow: 0 0 10px var(--accent-glow);
+  }
+</style>

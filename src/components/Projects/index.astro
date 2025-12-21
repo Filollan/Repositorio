@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
 
-
 import Mantenimiento from "./images/mantenimientoo.jpg";
 import Habitos from "./images/habitos.jpg";
 import GestiHorarios from "./images/GestiHorarios.png";
@@ -53,12 +52,13 @@ const PROJECTS = [
   <section class="container section projects-section" id="projects">
     <!-- Contenedor de partículas -->
     <div class="particles-container" aria-hidden="true">
-      <canvas 
+      <canvas
         class="particles-canvas"
         data-particle-animation
         width="100%"
         height="100%"
-        style="width: 100%; height: 100%;">
+        style="width: 100%; height: 100%;"
+      >
       </canvas>
     </div>
     <h2 class="section__title">Proyectos</h2>
@@ -87,7 +87,7 @@ const PROJECTS = [
                 </ul>
                 {
                   <div class="project__links">
-                  { /* <a
+                    {/* <a
                       class="button button--primary"
                       target="_blank"
                       href={project.liveLink}
@@ -96,7 +96,8 @@ const PROJECTS = [
                         <Icon name="lucide:link" class="icon-xs" />
                       </span>
                       <span>Pagina</span>
-                   </a> */}                    <a
+                   </a> */}{" "}
+                    <a
                       class="button button--secondary button--outline"
                       target="_blank"
                       href={project.sourceLink}
@@ -150,6 +151,7 @@ const PROJECTS = [
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
+    transition: var(--transition-smooth);
 
     > div {
       flex: 1;
@@ -158,10 +160,18 @@ const PROJECTS = [
     &__wrapper {
       background-color: var(--background);
       border: 1px solid var(--accents-2);
-      border-radius: 1rem;
-      box-shadow: var(--project-shadow);
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow-md);
       max-width: 700px;
       margin: 0 auto;
+      transition: var(--transition-smooth);
+      overflow: hidden;
+
+      &:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-xl);
+        border-color: var(--accents-3);
+      }
     }
 
     &__image {
@@ -169,13 +179,19 @@ const PROJECTS = [
       align-items: center;
       justify-content: center;
       aspect-ratio: 16 / 10;
-      border-radius: 0.5rem;
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
 
       img {
         width: auto;
         height: auto;
         border-radius: inherit;
+        transition: var(--transition-smooth);
       }
+    }
+
+    &__wrapper:hover &__image img {
+      transform: scale(1.08);
     }
 
     &__technologies {
@@ -188,9 +204,17 @@ const PROJECTS = [
         padding: 0.25rem 0.75rem;
         font-size: 15px;
         color: var(--accents-8);
+        background: var(--gray-alpha-400);
         border: 1px solid var(--accents-2);
-        border-radius: 0.25rem;
+        border-radius: var(--border-radius-sm);
         box-shadow: var(--badge-shadow);
+        transition: var(--transition-smooth);
+
+        &:hover {
+          background: var(--accents-2);
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-sm);
+        }
       }
     }
 
@@ -222,10 +246,12 @@ const PROJECTS = [
 </style>
 
 <script>
-  import { ParticleAnimation } from '../../utils/particles';
+  import { ParticleAnimation } from "../../utils/particles";
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.querySelector('#projects [data-particle-animation]');
+  document.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.querySelector(
+      "#projects [data-particle-animation]",
+    );
     if (!(canvas instanceof HTMLCanvasElement)) return;
 
     // Configuración específica para la sección de proyectos
@@ -234,13 +260,13 @@ const PROJECTS = [
       staticity: 2.5, // Movimiento moderado
       ease: 25, // Velocidad moderada
       particleColor: {
-        light: 'rgba(255, 0, 0, 0.6)', // Rojo suave en modo claro
-        dark: 'rgba(255, 255, 255, 0.6)' // Blanco suave en modo oscuro
-      }
+        light: "rgba(255, 0, 0, 0.6)", // Rojo suave en modo claro
+        dark: "rgba(255, 255, 255, 0.6)", // Blanco suave en modo oscuro
+      },
     });
 
     // Limpieza cuando el componente se desmonta
-    document.addEventListener('astro:before-swap', () => {
+    document.addEventListener("astro:before-swap", () => {
       projectsParticles.destroy();
     });
   });
