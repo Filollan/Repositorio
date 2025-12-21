@@ -14,51 +14,68 @@ import { Icon } from "astro-icon";
     >
     </canvas>
   </div>
-  <!-- Contenido principal del héroe -->
+
+  <!-- Contenido principal del héroe con layout dos columnas -->
   <section class="hero container" data-inviewport id="top">
-    <h1 class="hero__title">Miguel Llanten</h1>
-    <h2 class="hero__subtitle">Desarrollador Web</h2>
-    <p class="section__description">
-      ¡Hola! Soy estudiante de Ingeniería Informática en los últimos semestres y
-      desarrollador web, con experiencia en el desarrollo de aplicaciones web
-      para sectores educativos y empresariales.
-    </p>
-    <div class="hero__buttons">
-      <div>
-        <a
-          href="https://www.linkedin.com/in/miguel-ángel-llantén-62005a245/"
-          target="_blank"
-          class="button button--primary"
-        >
-          <span class="icon-wrapper--small"
-            ><Icon name="lucide:linkedin" /></span
+    <div class="hero__content">
+      <!-- Columna izquierda: Texto -->
+      <div class="hero__text">
+        <small class="hero__greeting">¡Hola! Mi nombre es</small>
+        <h1 class="hero__title">Miguel Llanten</h1>
+        <div class="hero__roles">
+          <h2 class="hero__subtitle">Desarrollador Web</h2>
+          <span class="hero__role-detail">Ingeniería Informática</span>
+        </div>
+        <p class="hero__description">
+         Ingeníero informático con mas de un año de experiencia en el desarrollo de paginas web
+         y automatizaciones tanto en el sector educativo como empresarial, con diferentes tecnologías como:
+         React, Astro, Angular +17, Node.js. Capacidad excelente en integración de APIs. Con conocimientos en patrones de diseño,
+         arquitecturas, POO, MongoDB, MySQL, Oracle SQL. Y altos conocimientos en N8N.
+        </p>
+
+        <!-- Botones de acción -->
+        <div class="hero__buttons">
+          <a
+            href="https://drive.google.com/file/d/1Xwb5FeBwFAj155xfpeOwxSOIZ0i44hlA/view?usp=sharing"
+            target="_blank"
+            class="hero__button hero__button--primary"
+            aria-label="Descargar CV"
           >
-          <span>Linkedln</span>
-        </a>
-      </div>
-      <div>
-        <a
-          href="https://github.com/Filollan"
-          target="_blank"
-          class="button button--primary"
-          aria-label="Github"
-        >
-          <span class="icon-wrapper--small"><Icon name="lucide:github" /></span>
-          <span class="hero__button-title">Github</span>
-        </a>
-      </div>
-      <div>
-        <a
-          href="https://drive.google.com/file/d/1Xwb5FeBwFAj155xfpeOwxSOIZ0i44hlA/view?usp=sharing"
-          target="_blank"
-          class="button button--primary"
-          aria-label="CV"
-        >
-          <span class="icon-wrapper--small"
-            ><Icon name="lucide:file-text" /></span
+            <span class="hero__button-content">Descargar CV</span>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/miguel-ángel-llantén-62005a245/"
+            target="_blank"
+            class="hero__button hero__button--icon"
+            aria-label="LinkedIn"
+            title="Ver perfil de LinkedIn"
           >
-          <span class="hero__button-title">CV</span>
-        </a>
+            <span class="hero__button-content">
+              <Icon name="lucide:linkedin" width="24" height="24" />
+            </span>
+          </a>
+          <a
+            href="https://github.com/Filollan"
+            target="_blank"
+            class="hero__button hero__button--icon"
+            aria-label="Github"
+            title="Ver perfil de GitHub"
+          >
+            <span class="hero__button-content">
+              <Icon name="lucide:github" width="24" height="24" />
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna derecha: Imagen -->
+      <div class="hero__image-wrapper">
+        <img
+          class="hero__image"
+          src="/profile.jpg"
+          alt="Miguel Llanten - Desarrollador Web"
+          loading="eager"
+        />
       </div>
     </div>
   </section>
@@ -68,87 +85,246 @@ import { Icon } from "astro-icon";
   @use "styles/screen";
 
   .hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     min-height: calc(100dvh - 4rem);
     padding-block: 3rem;
-    text-align: center;
 
     &__wrapper {
       position: relative;
       overflow: hidden;
     }
 
-    .section__description {
-      font-size: 1.3rem;
-      color: var(--accents-7);
-      line-height: 1.5;
-      max-width: 800px;
+    &__content {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 3rem;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1140px;
       margin-inline: auto;
+
+      @media (min-width: screen.$md) {
+        flex-direction: row;
+        gap: 4rem;
+      }
+    }
+
+    /* Columna de texto */
+    &__text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    &__greeting {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      color: var(--accents-6);
+      text-align: center;
       opacity: 0;
-      animation: fadeInUp 0.8s ease-out 0.4s forwards;
+      animation: fadeInUp 0.6s ease-out forwards;
+
+      @media (min-width: screen.$md) {
+        font-size: 1.25rem;
+        text-align: left;
+      }
     }
 
     &__title {
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
       font-size: 3rem;
       font-weight: 700;
       line-height: 1.05;
       color: var(--accents-8);
+      text-align: center;
       letter-spacing: -0.04em;
       opacity: 0;
-      animation: fadeInUp 0.8s ease-out forwards;
+      animation: fadeInUp 0.6s ease-out 0.1s forwards;
+
+      @media (min-width: screen.$md) {
+        font-size: 4.5rem;
+        text-align: left;
+      }
+
+      @media (min-width: screen.$lg) {
+        font-size: 5.5rem;
+      }
+    }
+
+    &__roles {
+      margin-bottom: 1.5rem;
+      text-align: center;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out 0.2s forwards;
+
+      @media (min-width: screen.$md) {
+        text-align: left;
+      }
     }
 
     &__subtitle {
-      margin-bottom: 1.75rem;
-      font-size: 1.75rem;
+      margin-bottom: 0.35rem;
+      font-size: 1.5rem;
       font-weight: 600;
-      line-height: 1;
+      line-height: 1.2;
       color: var(--primary);
-      letter-spacing: -0.04em;
-      opacity: 0;
-      animation: fadeInUp 0.8s ease-out 0.2s forwards;
+      letter-spacing: -0.02em;
+
+      @media (min-width: screen.$md) {
+        font-size: 2rem;
+      }
+
+      @media (min-width: screen.$lg) {
+        font-size: 2.25rem;
+      }
     }
 
+    &__role-detail {
+      display: block;
+      font-size: 1.125rem;
+      color: var(--accents-6);
+
+      @media (min-width: screen.$md) {
+        font-size: 1.25rem;
+      }
+    }
+
+    &__description {
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--accents-6);
+      text-align: center;
+      text-wrap: balance;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out 0.3s forwards;
+
+      @media (min-width: screen.$md) {
+        font-size: 1.125rem;
+        text-align: left;
+      }
+    }
+
+    /* Botones con efectos especiales */
     &__buttons {
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
       align-items: center;
       justify-content: center;
-      width: 100%;
       opacity: 0;
-      animation: fadeInUp 0.8s ease-out 0.6s forwards;
+      animation: fadeInUp 0.6s ease-out 0.4s forwards;
 
-      a {
-        text-decoration: none;
-        transition: var(--transition-smooth);
+      @media (min-width: screen.$md) {
+        justify-content: flex-start;
+        gap: 1rem;
+      }
+    }
+
+    &__button {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.875rem 1.75rem;
+      overflow: hidden;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      cursor: pointer;
+      background-color: var(--background);
+      border: 2px solid var(--primary);
+      border-radius: 1rem;
+      transition: var(--transition-smooth);
+
+      /* Efecto de ripple circular desde el centro */
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 0;
+        width: 0;
+        height: 0;
+        content: "";
+        background: var(--primary-gradient);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.5s ease;
+      }
+
+      &:hover::before {
+        width: 250%;
+        height: 250%;
+      }
+
+      &:hover {
+        color: var(--background);
+      }
+
+      &-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      /* Botón primario (Descargar CV) */
+      &--primary {
+        flex: 1;
+
+        @media (min-width: screen.$md) {
+          flex: none;
+        }
+      }
+
+      /* Botones de iconos */
+      &--icon {
+        padding: 0.875rem;
+        min-width: 3rem;
+        min-height: 3rem;
+
+        svg {
+          display: block;
+          width: 24px;
+          height: 24px;
+        }
 
         &:hover {
-          transform: translateY(-2px);
+          transform: scale(1.05);
         }
       }
     }
 
-    &__button-title {
-      display: none;
+    /* Columna de imagen */
+    &__image-wrapper {
+      flex-shrink: 0;
+      width: 15rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out 0.2s forwards;
+
+      @media (min-width: screen.$md) {
+        width: 18rem;
+      }
+
+      @media (min-width: screen.$lg) {
+        width: 22rem;
+      }
     }
 
-    @media (min-width: screen.$md) {
-      &__button-title {
-        display: inline-block;
-      }
+    &__image {
+      width: 100%;
+      height: auto;
+      padding: 0.5rem;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      object-fit: cover;
+      aspect-ratio: 1;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition-smooth);
 
-      &__title {
-        font-size: 5rem;
-      }
-
-      &__subtitle {
-        margin-bottom: 2.2rem;
-        font-size: 2.5rem;
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: var(--shadow-xl), var(--shadow-glow);
       }
     }
   }
