@@ -11,6 +11,9 @@
     "lint:eslint": "eslint . --fix",
     "lint:stylelint": "stylelint **/*.{css,scss,astro}  --fix"
   },
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "dependencies": {
     "@fontsource-variable/inter": "^5.0.8",
     "astro": "^3.0.9",
