@@ -61,10 +61,14 @@ const navItems = [
     }
 
     &__logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
+      display: none; // Oculto en móvil para dar espacio a navegación
+
+      @media (min-width: screen.$md) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+      }
 
       img {
         width: auto;

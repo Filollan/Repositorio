@@ -124,10 +124,12 @@ const { title } = Astro.props;
   const updateActiveNavLink = () => {
     const sections = document.querySelectorAll<HTMLElement>("section[id]");
     const navLinks = document.querySelectorAll<HTMLAnchorElement>(
-      ".navigation-menu__link, .mobile-menu__link",
+      ".navigation-menu__link",
     );
 
-    const scrollPosition = window.scrollY;
+    // Usar window.pageYOffset para mejor compatibilidad con iOS
+    const scrollPosition =
+      window.pageYOffset || document.documentElement.scrollTop;
 
     // Si estamos en la parte superior (menos de 200px), activar "Inicio"
     if (scrollPosition < 200) {
@@ -169,7 +171,29 @@ const { title } = Astro.props;
     });
   };
 
-  window.addEventListener("scroll", updateActiveNavLink, { passive: true });
+  // Usar requestAnimationFrame para mejor rendimiento en iOS
+  let ticking = false;
+  const handleScroll = () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateActiveNavLink();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+
+  // Actualizar también al hacer click en los links
+  document
+    .querySelectorAll<HTMLAnchorElement>('a[href^="#"]')
+    .forEach((link) => {
+      link.addEventListener("click", () => {
+        setTimeout(updateActiveNavLink, 100);
+      });
+    });
+
   updateActiveNavLink();
 </script>
 
