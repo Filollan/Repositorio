@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Añade tu sitemap cuando configures una URL final en astro.config.mjs
+# Sitemap: https://tudominio.com/sitemap-index.xml
