@@ -1,11 +1,10 @@
 ---
 import { Image } from "astro:assets";
 
-import Mantenimiento from "./images/mantenimientoo.jpg";
-import GestiHorarios from "./images/GestiHorarios.png";
-import CryptoSalud from "./images/CryptoSalud.png";
 import JBLPopayan from "./images/jbl-popayan.png";
 import JakeTienda from "./images/jake-tienda.png";
+import Wordle from "./images/wordle.png";
+import TicTacToe from "./images/tic-tac-toe.png";
 
 import { Icon } from "astro-icon";
 
@@ -23,30 +22,29 @@ const PROJECTS = [
     name: "Jake Tienda Electrónica",
     image: { src: JakeTienda, alt: "Jake Tienda Electrónica" },
     description:
-      "Compra los mejores productos de DJ en Jake - Tienda online con catálogo de marcas reconocidas",
+      "Tienda online con catálogo de marcas reconocidas para equipos y accesorios de audio",
     technologies: ["Tailwind CSS", "TypeScript", "Next.js", "Shopify"],
     liveLink: "https://www.jaketiendaelectronica.com/",
     sourceLink: "https://github.com/igrisdev/jake-tienda-frontend",
   },
   {
-    name: "CryptoSalud",
-    image: { src: CryptoSalud, alt: "CryptoSalud" },
+    name: "Wordle",
+    image: { src: Wordle, alt: "Juego Wordle" },
     description:
-      "Página web de historias clínicas implementando blockchain y docker para seguridad de datos",
-    technologies: ["Vue.js", "Express", "Node.js", "MongoDB", "Docker"],
-    sourceLink: "https://github.com/Filollan/Backend_Historias_Clinicas",
+      "Juego tipo Wordle desarrollado con lógica de validación de palabras e interfaz interactiva.",
+    technologies: ["JavaScript", "HTML", "CSS"],
+    sourceLink: "https://github.com/Filollan/Wordle",
   },
   {
-    name: "GestiHorarios",
-    image: { src: GestiHorarios, alt: "GestiHorarios" },
+    name: "Tic Tac Toe",
+    image: { src: TicTacToe, alt: "Juego Tic Tac Toe" },
     description:
-      "Aplicación web para hacer la gestión de horarios de docentes de una institución educativa",
-    technologies: ["Laravel", "Bootstrap", "MySQL", "Apache"],
-    sourceLink: "https://github.com/Filollan/GestiHorarios",
+      "Juego tres en raya con manejo de estado y reinicio de partidas.",
+    technologies: ["JavaScript", "HTML", "CSS"],
+    sourceLink: "https://github.com/Filollan/tic-tac-toe",
   },
 ];
 ---
-
 <div class="section__divider">
   <section class="container section projects-section" id="projects">
     <!-- Contenedor de partículas -->
