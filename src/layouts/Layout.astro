@@ -2,6 +2,7 @@
 import "styles/global.scss";
 import "@fontsource-variable/inter";
 import ScrollToTop from "components/ScrollToTop.astro";
+import WhatsAppButton from "components/WhatsAppButton.astro";
 
 interface Props {
   title: string;
@@ -125,7 +126,8 @@ const personSchema = {
 
     <slot />
 
-    <!-- Botón scroll to top -->
+    <!-- Botones flotantes -->
+    <WhatsAppButton />
     <ScrollToTop />
   </body>
 </html>
