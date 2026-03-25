@@ -3,12 +3,30 @@ import { Image } from "astro:assets";
 
 import JBLPopayan from "./images/jbl-popayan.png";
 import JakeTienda from "./images/jake-tienda.png";
-import Wordle from "./images/wordle.png";
-import TicTacToe from "./images/tic-tac-toe.png";
+import MacShop from "./images/macshop.png";
+import Equimas from "./images/equimas.png";
 
 import { Icon } from "astro-icon";
 
 const PROJECTS = [
+  {
+    name: "Mac Shop",
+    image: { src: MacShop, alt: "Mac Shop - Tienda de Apple" },
+    description:
+      "E-commerce de productos de Apple con sistema de carrito de compras y gestión de productos",
+    technologies: ["Tailwind CSS", "TypeScript", "Next.js", "Shopify"],
+    liveLink: "https://www.tiendamacshop.com/",
+    sourceLink: "https://github.com/Filollan/macshop-frontend.git",
+  },
+  {
+    name: "Equimas",
+    image: { src: Equimas, alt: "Equimas - Tienda de Equipos en acero" },
+    description:
+      "E-commerce de productos de equipos en acero inoxidable con sistema de carrito de compras y gestión de productos",
+    technologies: ["Tailwind CSS", "TypeScript", "Next.js", "Shopify"],
+    liveLink: "https://www.equimas.com.co/",
+    sourceLink: "https://github.com/Filollan/equimas-frontend.git",
+  },
   {
     name: "JBL Popayán",
     image: { src: JBLPopayan, alt: "JBL Popayán - Tienda de Audio" },
@@ -27,22 +45,31 @@ const PROJECTS = [
     liveLink: "https://www.jaketiendaelectronica.com/",
     sourceLink: "https://github.com/igrisdev/jake-tienda-frontend",
   },
-  {
-    name: "Wordle",
-    image: { src: Wordle, alt: "Juego Wordle" },
-    description:
-      "Juego tipo Wordle desarrollado con lógica de validación de palabras e interfaz interactiva.",
-    technologies: ["JavaScript", "HTML", "CSS"],
-    sourceLink: "https://github.com/Filollan/Wordle",
+];
+
+const OTHER_PROJECTS = [
+  
+  { 
+    name: "GestiHorarios",
+    description: "Aplicación web para la gestión de horarios, en un centro educativo",
+    technologies: ["PHP, Laravel, MySQL"],
+    liveLink: "#",
+    sourceLink: "https://github.com/Filollan/GestiHorarios.git",
   },
   {
-    name: "Tic Tac Toe",
-    image: { src: TicTacToe, alt: "Juego Tic Tac Toe" },
-    description:
-      "Juego tres en raya con manejo de estado y reinicio de partidas.",
-    technologies: ["JavaScript", "HTML", "CSS"],
-    sourceLink: "https://github.com/Filollan/tic-tac-toe",
+    name: "Historias Clínica Frontend",
+    description: "Aplicación web para la gestión de historias clínicas, en un centro médico",
+    technologies: ["Viu, JavaScript, Bootstrap"],
+    liveLink: "#",
+    sourceLink: "https://github.com/Filollan/Frontend_Historias_Clinicas.git",
   },
+  {
+    name: "Historias Clínica Banckend",
+    description: "Aplicación web para la gestión de historias clínicas, en un centro médico",
+    technologies: ["JavaScript, Node.js, Blockchain"],
+    liveLink: "#",
+    sourceLink: "https://github.com/Filollan/Backend_Historias_Clinicas.git",
+  }
 ];
 ---
 <div class="section__divider">
@@ -66,12 +93,23 @@ const PROJECTS = [
           <div class="project__wrapper" data-inviewport>
             <article class="project">
               <div class="project__image">
-                <Image
-                  src={project.image.src}
-                  width={800}
-                  height={538}
-                  alt={project.image.alt}
-                />
+                {project.liveLink ? (
+                  <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                    <Image
+                      src={project.image.src}
+                      width={800}
+                      height={538}
+                      alt={project.image.alt}
+                    />
+                  </a>
+                ) : (
+                  <Image
+                    src={project.image.src}
+                    width={800}
+                    height={538}
+                    alt={project.image.alt}
+                  />
+                )}
               </div>
 
               <div>
@@ -114,6 +152,57 @@ const PROJECTS = [
         ))
       }
     </div>
+
+    <div class="other-projects-section">
+      <h3 class="section__title small-title">Otros Proyectos</h3>
+      <div class="other-project-list">
+        {
+          OTHER_PROJECTS.map((project) => (
+            <div class="other-project__wrapper" data-inviewport>
+              <article class="other-project">
+                <div>
+                  <h4 class="medium-heading">{project.name}</h4>
+                  <p class="small-p">{project.description}</p>
+                  <ul class="project__technologies list">
+                    {project.technologies.map((technology) => (
+                      <li>{technology}</li>
+                    ))}
+                  </ul>
+                  {
+                    <div class="project__links other-project__links">
+                      {project.liveLink && project.liveLink !== "#" && (
+                        <a
+                          class="button button--primary button--small"
+                          target="_blank"
+                          href={project.liveLink}
+                        >
+                          <span class="icon-wrapper--small">
+                            <Icon name="lucide:link" class="icon-xs" />
+                          </span>
+                          <span>Página</span>
+                        </a>
+                      )}
+                      {project.sourceLink && project.sourceLink !== "#" && (
+                        <a
+                          class="button button--secondary button--outline button--small"
+                          target="_blank"
+                          href={project.sourceLink}
+                        >
+                          <span class="icon-wrapper--small">
+                            <Icon name="lucide:github" class="icon-xs" />
+                          </span>
+                          <span>Código</span>
+                        </a>
+                      )}
+                    </div>
+                  }
+                </div>
+              </article>
+            </div>
+          ))
+        }
+      </div>
+    </div>
   </section>
 </div>
 
@@ -148,6 +237,68 @@ const PROJECTS = [
       grid-template-columns: repeat(2, 1fr);
       gap: 2.5rem;
     }
+  }
+
+  .other-projects-section {
+    margin-top: 5rem;
+  }
+
+  .small-title {
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .other-project-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @media (min-width: screen.$md) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .other-project {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+    &__wrapper {
+      background-color: var(--background);
+      border: 1px solid var(--accents-2);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-smooth);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--accents-3);
+      }
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 1.5rem;
+    }
+
+    &__links {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+  }
+  
+  .button--small {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
   }
 
   .project {
@@ -191,6 +342,12 @@ const PROJECTS = [
         object-fit: cover;
         object-position: center;
         transition: var(--transition-smooth);
+      }
+
+      a {
+        display: block;
+        width: 100%;
+        height: 100%;
       }
     }
 
