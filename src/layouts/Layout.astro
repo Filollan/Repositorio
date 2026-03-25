@@ -5,13 +5,59 @@ import ScrollToTop from "components/ScrollToTop.astro";
 
 interface Props {
   title: string;
+  description?: string;
+  keywords?: string;
+  image?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description =
+    "Miguel Llantén, desarrollador web en Popayán (Cauca). Diseño y desarrollo de páginas web profesionales, tiendas online, landing pages y automatizaciones para negocios.",
+  keywords =
+    "desarrollador web en Popayán, páginas web Popayán, creación de sitios web Popayán, freelance Popayán, desarrollo web Cauca, portafolio desarrollador web",
+  image = "/opengraph-image.png",
+} = Astro.props;
+
+const canonicalURL = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).toString()
+  : undefined;
+const ogImage = Astro.site ? new URL(image, Astro.site).toString() : image;
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Miguel Llantén",
+  jobTitle: "Desarrollador Web",
+  description,
+  url: canonicalURL,
+  image: ogImage,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Popayán",
+    addressRegion: "Cauca",
+    addressCountry: "CO",
+  },
+  areaServed: ["Popayán", "Cauca", "Colombia"],
+  knowsAbout: [
+    "Desarrollo web",
+    "Landing pages",
+    "Tiendas online",
+    "Automatización de procesos",
+    "React",
+    "Astro",
+    "Node.js",
+    "Laravel",
+  ],
+  sameAs: [
+    "https://github.com/Filollan",
+    "https://www.linkedin.com/in/miguel-ángel-llantén-62005a245/",
+  ],
+};
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es-CO">
   <head>
     <script is:inline>
       function applyTheme(theme) {
@@ -49,15 +95,28 @@ const { title } = Astro.props;
     <meta name="theme-color" content="#ffffff" />
     <meta name="generator" content={Astro.generator} />
 
-    <meta name="keywords" content="front end, developer, porfolio" />
-    <meta property="og:title" content="Porfolio de Miguel" />
-    <meta
-      property="og:description"
-      content="Mira mas informacion sobre Miguel."
-    />
-    <meta property="og:image" content="/opengraph-image.png" />
+    {canonicalURL && <link rel="canonical" href={canonicalURL} />}
 
-    <meta name="description" content="Mira mas informacion sobre Miguel." />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Miguel Llantén" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    {canonicalURL && <meta property="og:url" content={canonicalURL} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)}>
+    </script>
+
     <title>{title}</title>
   </head>
   <body>
