@@ -21,7 +21,9 @@ import { Icon } from "astro-icon";
       <!-- Columna izquierda: Texto -->
       <div class="hero__text">
         <small class="hero__greeting">¡Hola! Mi nombre es</small>
-        <h1 class="hero__title">Miguel Llanten</h1>
+        <h1 class="hero__title">
+          <span class="hero__title-gradient">Miguel Llanten</span>
+        </h1>
         <div class="hero__roles">
           <h2 class="hero__subtitle">Desarrollador Web</h2>
           <span class="hero__role-detail">Ingeniería Informática</span>
@@ -184,6 +186,26 @@ import { Icon } from "astro-icon";
 
       @media (min-width: screen.$lg) {
         font-size: 5.5rem;
+      }
+
+      &-gradient {
+        display: inline-block;
+        color: transparent;
+        background-image: linear-gradient(
+          90deg,
+          rgb(168 85 247),
+          rgb(96 165 250),
+          rgb(168 85 247)
+        );
+        background-size: 200% auto;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: transform 0.3s ease;
+        animation: heroGradientShift 3s linear infinite;
+      }
+
+      &:hover &-gradient {
+        transform: scale(1.05);
       }
     }
 
@@ -445,6 +467,16 @@ import { Icon } from "astro-icon";
     z-index: -1;
     width: 100%;
     height: 100%;
+  }
+
+  @keyframes heroGradientShift {
+    from {
+      background-position: 0% 50%;
+    }
+
+    to {
+      background-position: 200% 50%;
+    }
   }
 </style>
 
