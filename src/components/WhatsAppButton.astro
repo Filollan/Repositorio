@@ -1,61 +1,270 @@
 ---
 const whatsappNumber = "573502397570";
-const whatsappURL = `https://wa.me/${whatsappNumber}`;
+const defaultMessage =
+  "Hola, estoy interesado en una página web y quiero más información sobre tus servicios.";
+const whatsappURL = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(defaultMessage)}`;
 ---
 
-<a
-  href={whatsappURL}
-  class="whatsapp-button"
-  aria-label="Abrir chat de WhatsApp"
-  title="Abrir chat de WhatsApp"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.7"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    aria-hidden="true"
+<div class="whatsapp-widget" data-whatsapp-widget>
+  <aside class="whatsapp-card" id="whatsapp-card" data-open="false" aria-hidden="true">
+    <div class="card-header">
+      <button
+        type="button"
+        class="close-card"
+        id="close-whatsapp-card"
+        aria-label="Cerrar chat de WhatsApp"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
+      <h3>¡Hola! 👋</h3>
+      <p>
+        ¿Quieres una página web profesional para tu negocio? Escríbeme por
+        WhatsApp y te respondo lo antes posible.
+      </p>
+    </div>
+
+    <div class="card-body">
+      <p class="reply-time">Normalmente respondo en unos minutos</p>
+
+      <a href={whatsappURL} target="_blank" rel="noopener noreferrer" class="chat-link">
+        <div class="avatar-wrap">
+          <div class="avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9l-5.05.9" />
+              <path d="M9 10a.5.5 0 0 0 1 0v-1a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" />
+            </svg>
+          </div>
+          <span class="status-dot"></span>
+        </div>
+
+        <div class="contact">
+          <strong>Miguel Llantén</strong>
+          <p>Desarrollador web</p>
+        </div>
+      </a>
+    </div>
+  </aside>
+
+  <button
+    type="button"
+    class="toggle-button"
+    id="toggle-whatsapp-card"
+    aria-label="Abrir chat de WhatsApp"
+    aria-expanded="false"
+    aria-controls="whatsapp-card"
   >
-    <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9l-5.05.9" />
-    <path d="M9 10a.5.5 0 0 0 1 0v-1a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" />
-  </svg>
-</a>
+    <svg class="icon-whatsapp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9l-5.05.9" />
+      <path d="M9 10a.5.5 0 0 0 1 0v-1a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" />
+    </svg>
+    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </svg>
+  </button>
+</div>
 
 <style lang="scss">
-  .whatsapp-button {
+  .whatsapp-widget {
     position: fixed;
     left: 1.5rem;
     bottom: 1.5rem;
-    z-index: 1000;
+    z-index: 9999;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.5rem;
-    height: 3.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .whatsapp-card {
+    width: min(350px, calc(100vw - 2rem));
+    overflow: hidden;
+    background: #f0f2f5;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgb(15 23 42 / 0.45);
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+
+    &[data-open="true"] {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+  }
+
+  .card-header {
+    position: relative;
+    padding: 1.5rem;
+    color: #fff;
+    background: #095e54;
+
+    h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+  }
+
+  .close-card {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
     color: #fff;
     cursor: pointer;
-    background-color: #25d366;
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+
+    svg {
+      width: 1.1rem;
+      height: 1.1rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    &:hover {
+      background: rgb(255 255 255 / 0.12);
+    }
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .reply-time {
+    margin: 0 0 1rem;
+    color: #667085;
+    font-size: 0.74rem;
+    text-align: center;
+  }
+
+  .chat-link {
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 1rem;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    background: #fff;
+    border-radius: 0.9rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+
+    &:hover {
+      background: #f8fafc;
+      box-shadow: 0 10px 22px -16px rgb(15 23 42 / 0.55);
+      transform: translateY(-1px);
+    }
+  }
+
+  .avatar-wrap {
+    position: relative;
+  }
+
+  .avatar {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    color: #fff;
+    background: #25d366;
+    border-radius: 999px;
+
+    svg {
+      width: 1.6rem;
+      height: 1.6rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  }
+
+  .status-dot {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: #22c55e;
+    border: 2px solid #fff;
+    border-radius: 999px;
+  }
+
+  .contact {
+    strong {
+      display: block;
+      color: #1f2937;
+      font-size: 0.96rem;
+      line-height: 1.2;
+    }
+
+    p {
+      margin: 0.1rem 0 0;
+      color: #6b7280;
+      font-size: 0.85rem;
+    }
+  }
+
+  .toggle-button {
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    color: #fff;
+    cursor: pointer;
+    background: #25d366;
+    border: none;
     border-radius: 9999px;
-    box-shadow: var(--shadow-xl);
-    transition: transform 0.25s ease, background-color 0.25s ease;
+    box-shadow: 0 25px 50px -12px rgb(15 23 42 / 0.45);
+    transition: transform 0.22s ease, background-color 0.22s ease;
 
     svg {
       width: 2rem;
       height: 2rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-close {
+      display: none;
+    }
+
+    &[data-open="true"] {
+      .icon-whatsapp {
+        display: none;
+      }
+
+      .icon-close {
+        display: block;
+      }
     }
 
     &:hover {
-      background-color: #20bd5a;
-      transform: translateY(-4px) scale(1.08);
-    }
-
-    &:active {
-      transform: translateY(-2px) scale(1.04);
+      background: #20bd5a;
+      transform: translateY(-2px) scale(1.05);
     }
 
     &:focus-visible {
@@ -65,11 +274,49 @@ const whatsappURL = `https://wa.me/${whatsappNumber}`;
   }
 
   @media (max-width: 768px) {
-    .whatsapp-button {
+    .whatsapp-widget {
       left: 1rem;
       bottom: 1rem;
-      width: 3.25rem;
-      height: 3.25rem;
+      gap: 0.75rem;
+    }
+
+    .toggle-button {
+      width: 3.5rem;
+      height: 3.5rem;
+
+      svg {
+        width: 1.7rem;
+        height: 1.7rem;
+      }
     }
   }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const widget = document.querySelector("[data-whatsapp-widget]");
+    const card = document.getElementById("whatsapp-card");
+    const toggle = document.getElementById("toggle-whatsapp-card");
+    const close = document.getElementById("close-whatsapp-card");
+
+    if (!widget || !card || !toggle || !close) return;
+
+    const setOpen = (open) => {
+      card.setAttribute("data-open", String(open));
+      card.setAttribute("aria-hidden", String(!open));
+      toggle.setAttribute("data-open", String(open));
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute(
+        "aria-label",
+        open ? "Cerrar chat de WhatsApp" : "Abrir chat de WhatsApp",
+      );
+    };
+
+    toggle.addEventListener("click", () => {
+      const isOpen = card.getAttribute("data-open") === "true";
+      setOpen(!isOpen);
+    });
+
+    close.addEventListener("click", () => setOpen(false));
+  });
+</script>
