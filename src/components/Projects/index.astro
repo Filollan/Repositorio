@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 
 import JBLPopayan from "./images/jbl-popayan.png";
 import JakeTienda from "./images/jake-tienda.png";
@@ -7,70 +6,87 @@ import MacShop from "./images/macshop.png";
 import Equimas from "./images/equimas.png";
 
 import { Icon } from "astro-icon";
+import {
+  getProjectsFromNotion,
+  splitProjectsByType,
+} from "../../utils/notionProjects";
 
-const PROJECTS = [
+const FALLBACK_PROJECTS = [
   {
     name: "Mac Shop",
-    image: { src: MacShop, alt: "Mac Shop - Tienda de Apple" },
+    image: { src: MacShop.src, alt: "Mac Shop - Tienda de Apple" },
     description:
       "E-commerce de productos de Apple con sistema de carrito de compras y gestión de productos",
     technologies: ["Tailwind CSS", "TypeScript", "Next.js", "Shopify"],
     liveLink: "https://www.tiendamacshop.com/",
     sourceLink: "https://github.com/Filollan/macshop-frontend.git",
+    createdAt: "2024-01-01T00:00:00.000Z",
   },
   {
     name: "Equimas",
-    image: { src: Equimas, alt: "Equimas - Tienda de Equipos en acero" },
+    image: { src: Equimas.src, alt: "Equimas - Tienda de Equipos en acero" },
     description:
       "E-commerce de productos de equipos en acero inoxidable con sistema de carrito de compras y gestión de productos",
     technologies: ["Tailwind CSS", "TypeScript", "Next.js", "Shopify"],
     liveLink: "https://www.equimas.com.co/",
     sourceLink: "https://github.com/Filollan/equimas-frontend.git",
+    createdAt: "2023-12-01T00:00:00.000Z",
   },
   {
     name: "JBL Popayán",
-    image: { src: JBLPopayan, alt: "JBL Popayán - Tienda de Audio" },
+    image: { src: JBLPopayan.src, alt: "JBL Popayán - Tienda de Audio" },
     description:
       "E-commerce de productos de audio JBL con sistema de carrito de compras y gestión de productos",
     technologies: ["Tailwind CSS", "TypeScript", "Next.js", "Shopify"],
     liveLink: "https://www.jblpopayan.com/",
     sourceLink: "https://github.com/igrisdev/jbl-by-harman-tienda-frontend",
+    createdAt: "2023-11-01T00:00:00.000Z",
   },
   {
     name: "Jake Tienda Electrónica",
-    image: { src: JakeTienda, alt: "Jake Tienda Electrónica" },
+    image: { src: JakeTienda.src, alt: "Jake Tienda Electrónica" },
     description:
       "Tienda online con catálogo de marcas reconocidas para equipos y accesorios de audio",
     technologies: ["Tailwind CSS", "TypeScript", "Next.js", "Shopify"],
     liveLink: "https://www.jaketiendaelectronica.com/",
     sourceLink: "https://github.com/igrisdev/jake-tienda-frontend",
+    createdAt: "2023-10-01T00:00:00.000Z",
   },
-];
-
-const OTHER_PROJECTS = [
-  
-  { 
+  {
     name: "GestiHorarios",
+    image: null,
     description: "Aplicación web para la gestión de horarios, en un centro educativo",
-    technologies: ["PHP, Laravel, MySQL"],
-    liveLink: "#",
+    technologies: ["PHP", "Laravel", "MySQL"],
+    liveLink: "",
     sourceLink: "https://github.com/Filollan/GestiHorarios.git",
+    createdAt: "2023-09-01T00:00:00.000Z",
   },
   {
     name: "Historias Clínica Frontend",
-    description: "Aplicación web para la gestión de historias clínicas, en un centro médico",
-    technologies: ["Viu, JavaScript, Bootstrap"],
-    liveLink: "#",
+    image: null,
+    description:
+      "Aplicación web para la gestión de historias clínicas, en un centro médico",
+    technologies: ["Vue", "JavaScript", "Bootstrap"],
+    liveLink: "",
     sourceLink: "https://github.com/Filollan/Frontend_Historias_Clinicas.git",
+    createdAt: "2023-08-01T00:00:00.000Z",
   },
   {
-    name: "Historias Clínica Banckend",
-    description: "Aplicación web para la gestión de historias clínicas, en un centro médico",
-    technologies: ["JavaScript, Node.js, Blockchain"],
-    liveLink: "#",
+    name: "Historias Clínica Backend",
+    image: null,
+    description:
+      "Aplicación web para la gestión de historias clínicas, en un centro médico",
+    technologies: ["JavaScript", "Node.js", "Blockchain"],
+    liveLink: "",
     sourceLink: "https://github.com/Filollan/Backend_Historias_Clinicas.git",
-  }
+    createdAt: "2023-07-01T00:00:00.000Z",
+  },
 ];
+
+const notionProjects = await getProjectsFromNotion();
+const projectsSource = notionProjects.length > 0 ? notionProjects : FALLBACK_PROJECTS;
+const { mainProjects: PROJECTS, otherProjects: OTHER_PROJECTS } =
+  splitProjectsByType(projectsSource);
 ---
 <div class="section__divider">
   <section class="container section projects-section" id="projects">
@@ -95,20 +111,10 @@ const OTHER_PROJECTS = [
               <div class="project__image">
                 {project.liveLink ? (
                   <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
-                    <Image
-                      src={project.image.src}
-                      width={800}
-                      height={538}
-                      alt={project.image.alt}
-                    />
+                    <img src={project.image?.src} alt={project.image?.alt ?? project.name} loading="lazy" />
                   </a>
                 ) : (
-                  <Image
-                    src={project.image.src}
-                    width={800}
-                    height={538}
-                    alt={project.image.alt}
-                  />
+                  <img src={project.image?.src} alt={project.image?.alt ?? project.name} loading="lazy" />
                 )}
               </div>
 
@@ -134,16 +140,18 @@ const OTHER_PROJECTS = [
                         <span>Página</span>
                       </a>
                     )}
-                    <a
-                      class="button button--secondary button--outline"
-                      target="_blank"
-                      href={project.sourceLink}
-                    >
-                      <span class="icon-wrapper--small">
-                        <Icon name="lucide:github" class="icon-xs" />
-                      </span>
-                      <span>Código</span>
-                    </a>
+                    {project.sourceLink && (
+                      <a
+                        class="button button--secondary button--outline"
+                        target="_blank"
+                        href={project.sourceLink}
+                      >
+                        <span class="icon-wrapper--small">
+                          <Icon name="lucide:github" class="icon-xs" />
+                        </span>
+                        <span>Código</span>
+                      </a>
+                    )}
                   </div>
                 }
               </div>

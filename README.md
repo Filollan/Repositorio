@@ -49,3 +49,16 @@ para instalar el proyecto localmente tienes que seguir los siguientes pasos:
 3. Ejecutar pnpm install.
 4. Ejecutar pnpm run dev.
 
+
+
+## Variables de entorno
+
+Para cargar proyectos desde Notion, crea un archivo `.env` con:
+
+```bash
+NOTION_TOKEN=tu_token_de_integracion
+NOTION_PROYECTS=tu_database_id
+# Opcionalmente también funciona NOTION_PROJECTS
+```
+
+> La base de datos en Notion debe tener estas propiedades: `name` (title/text), `image` (files), `description` (rich text), `technologies` (rich text), `liveLink` (url) y `sourceLink` (url).
