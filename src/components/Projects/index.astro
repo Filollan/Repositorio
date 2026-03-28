@@ -109,12 +109,21 @@ const { mainProjects: PROJECTS, otherProjects: OTHER_PROJECTS } =
           <div class="project__wrapper" data-inviewport>
             <article class="project">
               <div class="project__image">
-                {project.liveLink ? (
+                {project.liveLink && (
                   <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
-                    <img src={project.image?.src} alt={project.image?.alt ?? project.name} loading="lazy" />
+                    <img
+                      src={project.image && project.image.src ? project.image.src : ""}
+                      alt={project.image && project.image.alt ? project.image.alt : project.name}
+                      loading="lazy"
+                    />
                   </a>
-                ) : (
-                  <img src={project.image?.src} alt={project.image?.alt ?? project.name} loading="lazy" />
+                )}
+                {!project.liveLink && (
+                  <img
+                    src={project.image && project.image.src ? project.image.src : ""}
+                    alt={project.image && project.image.alt ? project.image.alt : project.name}
+                    loading="lazy"
+                  />
                 )}
               </div>
 

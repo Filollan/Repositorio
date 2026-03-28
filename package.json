@@ -3,11 +3,11 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
+    "dev": "SASS_SILENCE_DEPRECATIONS=legacy-js-api astro dev",
+    "start": "SASS_SILENCE_DEPRECATIONS=legacy-js-api astro dev",
+    "build": "SASS_SILENCE_DEPRECATIONS=legacy-js-api astro build",
+    "preview": "SASS_SILENCE_DEPRECATIONS=legacy-js-api astro preview",
+    "astro": "SASS_SILENCE_DEPRECATIONS=legacy-js-api astro",
     "lint:eslint": "eslint . --fix",
     "lint:stylelint": "stylelint **/*.{css,scss,astro}  --fix"
   },
