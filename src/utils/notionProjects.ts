@@ -28,6 +28,23 @@ type NotionMultiSelect = {
   name?: string;
 };
 
+type NotionSelectLike = {
+  name?: string;
+};
+
+type NotionDate = {
+  start?: string;
+  end?: string | null;
+};
+
+type NotionFormula = {
+  type?: "string" | "number" | "boolean" | "date";
+  string?: string | null;
+  number?: number | null;
+  boolean?: boolean | null;
+  date?: NotionDate | null;
+};
+
 type NotionPage = {
   created_time: string;
   properties?: Record<string, unknown>;
@@ -40,7 +57,7 @@ type NotionQueryResponse = {
 const normalizeKey = (value: string) =>
   value
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[̀-ͯ]/g, "")
     .replace(/\s+/g, "")
     .toLowerCase()
     .trim();
@@ -59,7 +76,12 @@ const getPropertyByAliases = (
   return properties[foundKey];
 };
 
-const getPlainText = (value: unknown) => {
+const stringifyValue = (value: unknown) => {
+  if (value === null || value === undefined) return "";
+  return String(value).trim();
+};
+
+const getTextValue = (value: unknown): string => {
   if (!value || typeof value !== "object") return "";
 
   const richText = (value as { rich_text?: NotionRichText[] }).rich_text;
@@ -81,6 +103,44 @@ const getPlainText = (value: unknown) => {
       .trim();
   }
 
+  const select = (value as { select?: NotionSelectLike | null }).select;
+  if (select && typeof select === "object") {
+    return stringifyValue(select.name);
+  }
+
+  const status = (value as { status?: NotionSelectLike | null }).status;
+  if (status && typeof status === "object") {
+    return stringifyValue(status.name);
+  }
+
+  const url = (value as { url?: string | null }).url;
+  if (typeof url === "string") return url.trim();
+
+  const email = (value as { email?: string | null }).email;
+  if (typeof email === "string") return email.trim();
+
+  const phone = (value as { phone_number?: string | null }).phone_number;
+  if (typeof phone === "string") return phone.trim();
+
+  const number = (value as { number?: number | null }).number;
+  if (typeof number === "number") return String(number);
+
+  const checkbox = (value as { checkbox?: boolean | null }).checkbox;
+  if (typeof checkbox === "boolean") return checkbox ? "true" : "false";
+
+  const date = (value as { date?: NotionDate | null }).date;
+  if (date && typeof date === "object") {
+    return stringifyValue(date.start);
+  }
+
+  const formula = (value as { formula?: NotionFormula | null }).formula;
+  if (formula && typeof formula === "object") {
+    if (formula.type === "string") return stringifyValue(formula.string);
+    if (formula.type === "number") return stringifyValue(formula.number);
+    if (formula.type === "boolean") return stringifyValue(formula.boolean);
+    if (formula.type === "date") return stringifyValue(formula.date?.start);
+  }
+
   return "";
 };
 
@@ -99,11 +159,7 @@ const normalizeUrl = (value: string) => {
   return trimmedValue;
 };
 
-const getUrl = (value: unknown) => {
-  if (!value || typeof value !== "object") return "";
-  const rawUrl = ((value as { url?: string }).url ?? "").trim();
-  return normalizeUrl(rawUrl);
-};
+const getUrl = (value: unknown) => normalizeUrl(getTextValue(value));
 
 const getFirstFileUrl = (value: unknown) => {
   if (!value || typeof value !== "object") return "";
@@ -141,12 +197,14 @@ const isValidUrl = (value: string) => {
 const parseProjectFromPage = (page: NotionPage): Project | null => {
   const properties = page.properties ?? {};
 
-  const name = getPlainText(getPropertyByAliases(properties, ["name", "nombre", "title", "titulo"]));
-  const description = getPlainText(
+  const name = getTextValue(
+    getPropertyByAliases(properties, ["name", "nombre", "title", "titulo"]),
+  );
+  const description = getTextValue(
     getPropertyByAliases(properties, ["description", "descripcion", "descripción"]),
   );
   const technologies = parseTechnologies(
-    getPlainText(
+    getTextValue(
       getPropertyByAliases(properties, [
         "technologies",
         "tecnologies",
