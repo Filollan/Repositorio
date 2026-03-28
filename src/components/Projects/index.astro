@@ -112,16 +112,16 @@ const { mainProjects: PROJECTS, otherProjects: OTHER_PROJECTS } =
                 {project.liveLink && (
                   <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
                     <img
-                      src={project.image && project.image.src ? project.image.src : ""}
-                      alt={project.image && project.image.alt ? project.image.alt : project.name}
+                      src={(project.image && project.image.src) || ""}
+                      alt={(project.image && project.image.alt) || project.name}
                       loading="lazy"
                     />
                   </a>
                 )}
                 {!project.liveLink && (
                   <img
-                    src={project.image && project.image.src ? project.image.src : ""}
-                    alt={project.image && project.image.alt ? project.image.alt : project.name}
+                    src={(project.image && project.image.src) || ""}
+                    alt={(project.image && project.image.alt) || project.name}
                     loading="lazy"
                   />
                 )}
