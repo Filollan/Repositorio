@@ -24,6 +24,10 @@ type NotionFile = {
   external?: { url?: string };
 };
 
+type NotionMultiSelect = {
+  name?: string;
+};
+
 type NotionPage = {
   created_time: string;
   properties?: Record<string, unknown>;
@@ -31,6 +35,28 @@ type NotionPage = {
 
 type NotionQueryResponse = {
   results?: NotionPage[];
+};
+
+const normalizeKey = (value: string) =>
+  value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "")
+    .toLowerCase()
+    .trim();
+
+const getPropertyByAliases = (
+  properties: Record<string, unknown>,
+  aliases: string[],
+) => {
+  const normalizedAliases = aliases.map(normalizeKey);
+
+  const foundKey = Object.keys(properties).find((propertyKey) =>
+    normalizedAliases.includes(normalizeKey(propertyKey)),
+  );
+
+  if (!foundKey) return undefined;
+  return properties[foundKey];
 };
 
 const getPlainText = (value: unknown) => {
@@ -46,12 +72,37 @@ const getPlainText = (value: unknown) => {
     return title.map((item) => item.plain_text ?? "").join("").trim();
   }
 
+  const multiSelect = (value as { multi_select?: NotionMultiSelect[] }).multi_select;
+  if (Array.isArray(multiSelect) && multiSelect.length > 0) {
+    return multiSelect
+      .map((item) => item.name ?? "")
+      .filter(Boolean)
+      .join(", ")
+      .trim();
+  }
+
   return "";
+};
+
+const normalizeUrl = (value: string) => {
+  const trimmedValue = value.trim();
+  if (!trimmedValue) return "";
+
+  if (trimmedValue.startsWith("http://") || trimmedValue.startsWith("https://")) {
+    return trimmedValue;
+  }
+
+  if (trimmedValue.includes(".")) {
+    return `https://${trimmedValue}`;
+  }
+
+  return trimmedValue;
 };
 
 const getUrl = (value: unknown) => {
   if (!value || typeof value !== "object") return "";
-  return ((value as { url?: string }).url ?? "").trim();
+  const rawUrl = ((value as { url?: string }).url ?? "").trim();
+  return normalizeUrl(rawUrl);
 };
 
 const getFirstFileUrl = (value: unknown) => {
@@ -71,6 +122,7 @@ const getFirstFileUrl = (value: unknown) => {
 
 const parseTechnologies = (rawTechnologies: string) =>
   rawTechnologies
+    .replace(/[\[\]"]/g, "")
     .split(",")
     .map((technology) => technology.trim())
     .filter(Boolean);
@@ -89,12 +141,30 @@ const isValidUrl = (value: string) => {
 const parseProjectFromPage = (page: NotionPage): Project | null => {
   const properties = page.properties ?? {};
 
-  const name = getPlainText(properties.name);
-  const description = getPlainText(properties.description);
-  const technologies = parseTechnologies(getPlainText(properties.technologies));
-  const liveLink = getUrl(properties.liveLink);
-  const sourceLink = getUrl(properties.sourceLink);
-  const imageUrl = getFirstFileUrl(properties.image);
+  const name = getPlainText(getPropertyByAliases(properties, ["name", "nombre", "title", "titulo"]));
+  const description = getPlainText(
+    getPropertyByAliases(properties, ["description", "descripcion", "descripción"]),
+  );
+  const technologies = parseTechnologies(
+    getPlainText(
+      getPropertyByAliases(properties, [
+        "technologies",
+        "tecnologies",
+        "tecnologias",
+        "tecnologías",
+        "stack",
+      ]),
+    ),
+  );
+  const liveLink = getUrl(
+    getPropertyByAliases(properties, ["liveLink", "live link", "demo", "url"]),
+  );
+  const sourceLink = getUrl(
+    getPropertyByAliases(properties, ["sourceLink", "source link", "github", "repo", "repositorio"]),
+  );
+  const imageUrl = getFirstFileUrl(
+    getPropertyByAliases(properties, ["image", "imagen", "cover", "thumbnail"]),
+  );
 
   if (!name) return null;
 
