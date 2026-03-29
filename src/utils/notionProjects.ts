@@ -68,9 +68,16 @@ const getPropertyByAliases = (
 ) => {
   const normalizedAliases = aliases.map(normalizeKey);
 
-  const foundKey = Object.keys(properties).find((propertyKey) =>
-    normalizedAliases.includes(normalizeKey(propertyKey)),
-  );
+  const foundKey = Object.keys(properties).find((propertyKey) => {
+    const normalizedPropertyKey = normalizeKey(propertyKey);
+
+    return normalizedAliases.some(
+      (alias) =>
+        normalizedPropertyKey === alias ||
+        normalizedPropertyKey.includes(alias) ||
+        alias.includes(normalizedPropertyKey),
+    );
+  });
 
   if (!foundKey) return undefined;
   return properties[foundKey];
@@ -179,7 +186,7 @@ const getFirstFileUrl = (value: unknown) => {
 const parseTechnologies = (rawTechnologies: string) =>
   rawTechnologies
     .replace(/[\[\]"]/g, "")
-    .split(",")
+    .split(/[,;|•\n]/)
     .map((technology) => technology.trim())
     .filter(Boolean);
 
@@ -207,8 +214,10 @@ const parseProjectFromPage = (page: NotionPage): Project | null => {
     getTextValue(
       getPropertyByAliases(properties, [
         "technologies",
+        "technology",
         "tecnologies",
         "tecnologias",
+        "tecnología",
         "tecnologías",
         "stack",
       ]),
