@@ -4,14 +4,15 @@ import Icon from "astro-icon";
 
 <div class="footer__wrapper">
   <footer>
-
     <ul class="footer__icons list">
       <li>
         <a
           class="button button--secondary button--icon"
           href="https://www.linkedin.com/in/miguel-ángel-llantén-62005a245/"
           target="_blank"
-          aria-label="Linked-in"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          title="Ver perfil de LinkedIn"
         >
           <Icon name="lucide:linkedin" class="icon-sm" />
         </a>
@@ -21,9 +22,33 @@ import Icon from "astro-icon";
           href="https://github.com/Filollan"
           class="button button--secondary button--icon"
           target="_blank"
-          aria-label="Github"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          title="Ver perfil de GitHub"
         >
           <Icon name="lucide:github" class="icon-sm" />
+        </a>
+      </li>
+      <li>
+        <a
+          href="mailto:miguellantenn@gmail.com"
+          class="button button--secondary button--icon"
+          aria-label="Gmail"
+          title="Enviar correo a Gmail"
+        >
+          <Icon name="simple-icons:gmail" class="icon-sm" />
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://wa.me/573502397570"
+          class="button button--secondary button--icon"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp"
+          title="Escribir por WhatsApp"
+        >
+          <Icon name="simple-icons:whatsapp" class="icon-sm" />
         </a>
       </li>
     </ul>
@@ -36,8 +61,8 @@ import Icon from "astro-icon";
   footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: 4rem;
+    justify-content: center;
+    min-height: 4rem;
     padding-inline: 1rem;
 
     @media (min-width: screen.$md) {
@@ -50,16 +75,14 @@ import Icon from "astro-icon";
       box-shadow: var(--divider-shadow);
     }
 
-    &__description {
-      font-size: 14px;
-      color: var(--foreground);
-    }
-
     &__icons {
       display: flex;
       flex-direction: row;
-      gap: 0.25rem;
+      justify-content: center;
+      gap: 0.5rem;
       color: var(--accents-7);
+      margin: 0;
+      padding: 0.75rem 0;
     }
   }
 </style>
