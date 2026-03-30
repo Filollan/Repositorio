@@ -6,6 +6,7 @@
     "dev": "SASS_SILENCE_DEPRECATIONS=legacy-js-api astro dev",
     "start": "SASS_SILENCE_DEPRECATIONS=legacy-js-api astro dev",
     "build": "SASS_SILENCE_DEPRECATIONS=legacy-js-api astro build",
+    "postbuild": "node scripts/fix-vercel-runtime.cjs",
     "preview": "SASS_SILENCE_DEPRECATIONS=legacy-js-api astro preview",
     "astro": "SASS_SILENCE_DEPRECATIONS=legacy-js-api astro",
     "lint:eslint": "eslint . --fix",
@@ -15,7 +16,7 @@
     "node": "20.x"
   },
   "dependencies": {
-    "@astrojs/vercel": "^4.0.4",
+    "@astrojs/vercel": "^5.2.0",
     "@fontsource-variable/inter": "^5.0.8",
     "astro": "^3.0.9",
     "astro-icon": "^0.8.1",
