@@ -184,12 +184,14 @@ code {
   transition: var(--transition-smooth);
   position: relative;
   overflow: hidden;
+  touch-action: manipulation;
 
   /* Efecto de ripple al hacer hover */
   &::before {
     content: '';
     position: absolute;
     inset: 0;
+    pointer-events: none;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
     opacity: 0;
     transform: scale(0);
