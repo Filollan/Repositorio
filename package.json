@@ -16,6 +16,7 @@
     "node": "20.x"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.0.5",
     "@astrojs/vercel": "^5.2.0",
     "@fontsource-variable/inter": "^5.0.8",
     "astro": "^3.0.9",
@@ -39,6 +40,9 @@
   "pnpm": {
     "patchedDependencies": {
       "astro-icon@0.8.1": "patches/astro-icon@0.8.1.patch"
+    },
+    "overrides": {
+      "sitemap": "7.1.1"
     }
   }
 }
